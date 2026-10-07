@@ -1,0 +1,98 @@
+<div class="pages-body">
+    <h2 class="page-title">View TV Shows</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/dashboard"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/tvshows">TV Shows</a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">View TV Show</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="view-card-row">
+            <div class="view-card-image">
+                <img src="{{tvshowImage}}" alt="Image">
+            </div>
+            <div class="view-card-information">
+                <h2 class="view-title mb-3">{{tvshowName}}</h2>
+                <div class="d-sm-flex mb-3">
+                    <p class="d-flex align-items-center text-heading mb-0">{{totalSeasons}} Seasons - {{totalEpisodes}} Episodes <span class="subtitle-icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#304edb"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H5V6h14v12zM7 15h3c.55 0 1-.45 1-1v-1H9.5v.5h-2v-3h2v.5H11v-1c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm7 0h3c.55 0 1-.45 1-1v-1h-1.5v.5h-2v-3h2v.5H18v-1c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1z"/></svg> <span class="pl-1">{{tvshowLanguage}}</span></span></p>
+                </div>
+                <div class="d-flex mb-2">
+                    <h5 class="mb-0">Genres:</h5>
+                    <p class="fs-ls ml-2">{{genres}}</p>
+                </div>
+                <p class="fs-ls text-heading">{{tvshowDescription}}</p>
+            </div>
+        </div>
+        <div class="detail-section">
+            <div class="text-center">
+                <h5 class="det-title">Seasons</h5>
+            </div>
+            <div class="common-accordion mt-4">
+                <ngb-accordion [closeOthers]="true" activeIds="season-0">
+                    <ngb-panel *ngFor="let allSeason of allSeasons; let i = index"  id="season-{{i}}">
+                        <ng-template ngbPanelTitle>
+                            <h5 class="mb-0" (click)="getallepisodes(allSeason.season_id)">Season {{i+1}} <span class="toggle-accordion"><i-feather class="feather-icon" name="chevron-up"></i-feather></span></h5>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="season-left-image">
+                                        <img src="{{allSeason.cover}}" alt="Image">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="view-card-information season-card-info">
+                                        <h2 class="view-title mb-3">{{allSeason.season_name}}</h2>
+                                        <div class="d-sm-flex mb-3">
+                                            <p class="d-flex align-items-center text-heading mb-0">{{totalSeasonEpisodesCount}} Episodes - {{allSeason.released_date | date:'mediumDate'}}
+                                                <span class="certificate">{{allSeason.certificate}}</span>
+                                            </p>
+                                            <div class="trailer-btn" *ngIf="allSeason.trailer_video_source != '' && allSeason.trailer_video_source != null">
+                                                <button class="common-button border-btn fs-ls" (click)="openTrailerModal(trailerModal,allSeason.trailer_video_source)"><i-feather class="feather-icon fill-m-color icon-wid-sm mr-2" name="play"></i-feather> Play Trailer</button>
+                                            </div>
+                                        </div>
+                                        <p class="fs-ls text-heading">{{allSeason.description}}</p>
+                                        <h5 class="det-title mt-3 mb-3">Episodes</h5>
+                                        <ngx-slick-carousel class="carousel common-carousel season-carousel" #slickModal="slick-carousel" [config]="seasonSlideConfig">
+                                            <div ngxSlickItem class="slide" *ngFor="let allEpisode of allEpisodes">
+                                                <div class="grid-list-card grid-list-card-t3">
+                                                    <div class="grid-list-card-image">
+                                                        <img src="{{allEpisode.cover}}" alt="Image">
+                                                        <!-- <span class="badge badge-genre">Comedy</span> -->
+                                                    </div>
+                                                    <div class="grid-list-card-body">
+                                                        <div class="d-flex justify-content-between mb-2">
+                                                            <span class="fs-lss">Episode {{allEpisode.episode_number}}</span>
+                                                            <span class="re-language fs-lss">Englsih</span>
+                                                        </div>
+                                                        <h5 class="desc-ellipsize-l1">{{allEpisode.episode_name}}</h5>
+                                                        <p class="desc-ellipsize-l3 list-card-desc">{{allEpisode.description}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ngx-slick-carousel>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trailer Modal Popup -->
+<ng-template #trailerModal let-modal>
+    <div class="video-modal">
+        <span class="close-modal">
+            <i-feather class="feather-icon cursor" name="x" (click)="modal.dismiss('Cross click')"></i-feather>
+        </span>
+        <div class="modal-body">
+            <video width="100%" height="100%" controls>
+                <source [src]="trailerUrl">
+            </video>
+        </div>
+    </div>
+</ng-template>

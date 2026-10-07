@@ -1,0 +1,311 @@
+<div class="pages-body">
+    <h2 class="page-title">Customer Profile</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/customers">Customers</a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">Customer Profile</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                <div class="customer-card h-100">
+                    <div class="customer-card-row">
+                        <img class="cust-profile-image" src="{{customerImage}}" alt="Image">
+                        <div class="customer-card-col-right">
+                            <h3 class="fw-regular mb-0">{{customerName}}</h3>
+                            <div class="customer-contact-row">
+                                <div class="customer-contact-col d-flex align-items-center">
+                                    <i-feather class="feather-icon icon-wid-md text-success mt-5m" name="phone"></i-feather> 
+                                    <span class="ml-2 fs-ls">{{customerPhone}}</span>
+                                </div>
+                                <div class="customer-contact-col d-flex align-items-center">
+                                    <i-feather class="feather-icon icon-wid-md text-danger mt-5m" name="map-pin"></i-feather> 
+                                    <span class="ml-2 fs-ls">{{customerState}}, {{customerCountry}}</span>
+                                </div>
+                                <div class="customer-contact-col d-flex align-items-center">
+                                    <i-feather class="feather-icon icon-wid-md text-skyblue mt-5m" name="mail"></i-feather> 
+                                    <span class="ml-2 fs-ls">{{customerEmail}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                <div class="customer-card h-100">     
+                    <div class="d-flex justify-content-between">
+                        <h3 class="fw-regular res-text-center mb-0">Current Plan</h3>
+                        <span class="status-customer text-success active d-flex align-items-center" *ngIf="subStatus == 'Active'">{{subStatus}}</span>
+                        <span class="status-customer text-danger suspend d-flex align-items-center" *ngIf="subStatus == 'Suspend'">{{subStatus}}</span>
+                    </div>   
+                    <div class="customer-contact-row">
+                        <div class="customer-contact-col">
+                            <span class="badge cus-badge badge-vip">{{subName}}</span>
+                            <h5 class="subscribe-amount mb-0 mt-2">${{subAmount}}
+                                <span *ngIf="subDuration > 1">/{{subDuration}} Months</span>
+                                <span *ngIf="subDuration == 1">/{{subDuration}} Month</span>
+                            </h5>
+                        </div>
+                        <div class="customer-contact-col col-c-2">
+                            <h5>Next Payment Date</h5>
+                            <p>{{nextPaymentDate | date}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-between">
+            <div class="col-list-xl col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
+                <div class="customer-status-box success-bg-border">
+                    <span class="d-flex align-items-center text-heading"><i-feather class="feather-icon icon-wid-lg mr-3 text-success" name="check-circle"></i-feather> Successfull Payment</span>
+                    <span class="fw-thick text-success">{{successfullPayment}}</span>
+                </div>
+            </div>
+            <div class="col-list-xl col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
+                <div class="customer-status-box danger-bg-border">
+                    <span class="d-flex align-items-center text-heading"><i-feather class="feather-icon icon-wid-lg mr-3 text-danger" name="x-circle"></i-feather> Failed Payment</span>
+                    <span class="fw-thick text-danger">{{failedPayment}}</span>
+                </div>
+            </div>
+            <div class="col-list-xl col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
+                <div class="customer-status-box warning-bg-border">
+                    <span class="d-flex align-items-center text-heading"><i-feather class="feather-icon icon-wid-lg mr-3 text-warning" name="refresh-cw"></i-feather> Recurring Payment</span>
+                    <span class="fw-thick text-warning">{{recurringPayment}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="common-subtitle">
+            <h4 class="mb-4">Devices Connected</h4>
+        </div>
+        <div class="row mt-3">
+            <div class="col-list-xl col-lg-4 col-md-6 col-sm-6 col-12 mb-4" *ngFor="let connectdDevices of agentData">
+                <div class="customer-card card-connected h-100">
+                    <div class="customer-card-row">
+                        <span class="mt-5m"><i-feather class="feather-icon icon-wid-lg icon-m-color" name="check-circle"></i-feather></span>
+                        <div class="connect-body">
+                            <h5 class="text-capitalize">{{connectdDevices.browser}}</h5>
+                            <p class="fs-ls">{{connectdDevices.ip_address}} - {{connectdDevices.state}}, {{connectdDevices.country}}</p>
+                            <p class="fs-ls">{{connectdDevices.os}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav ngbNav #nav="ngbNav" class="history-tabs">
+            <ng-container ngbNavItem>
+              <a ngbNavLink>Payment History</a>
+              <ng-template ngbNavContent>
+                <div class="table-responsive customer-table">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Plan</th>
+                            <th class="text-center">Payment Type</th>
+                            <th class="text-center">Amount</th>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Status</th>
+                          </tr>
+                        </thead>
+                        <p></p>
+                        <tbody>
+                          <tr *ngFor="let paymenthistorydata of paymentHistoryData">
+                            <td class="text-center">
+                                <span class="badge cus-badge badge-basic" *ngIf="paymenthistorydata.sub_name == 'BASIC'">{{paymenthistorydata.sub_name}}</span>
+                                <span class="badge cus-badge badge-elite" *ngIf="paymenthistorydata.sub_name == 'Elite'">{{paymenthistorydata.sub_name}}</span>
+                                <span class="badge cus-badge badge-vip" *ngIf="paymenthistorydata.sub_name == 'VIP'">{{paymenthistorydata.sub_name}}</span>
+                            </td>
+                            <td class="text-center" *ngIf="paymenthistorydata.type == 'Initial'">Subscription</td>
+                            <td class="text-center" *ngIf="paymenthistorydata.type == 'Recurring'">Recurring</td>
+                            <td class="text-center">${{paymenthistorydata.sub_amount}}</td>
+                            <td class="text-center">{{paymenthistorydata.created_on | date: 'medium'}}</td>
+                            <td class="text-center">
+                                <span class="text-success" *ngIf="paymenthistorydata.sub_status == 'Paid'">{{paymenthistorydata.sub_status}}</span>
+                                <span class="text-danger" *ngIf="paymenthistorydata.sub_status == 'Failed'">{{paymenthistorydata.sub_status}}</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div class="table-responsive customer-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Plan
+                                    <div class="input-icon-box mt-2">
+                                        <select class="form-control pl-3">
+                                            <option>VIP</option>
+                                            <option>E-LITE</option>
+                                            <option>BASIC</option>
+                                        </select>
+                                        <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                                    </div>
+                                </th>
+                                <th class="text-center">Payment Type
+                                    <div class="input-icon-box mt-2">
+                                        <select class="form-control pl-3">
+                                            <option>Subscribe</option>
+                                            <option>Subscribe</option>
+                                            <option>Subscribe</option>
+                                        </select>
+                                        <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                                    </div>
+                                </th>
+                                <th class="text-center">Amount
+                                    <div class="input-icon-box common-calendar mt-2">
+                                        <i-feather class="feather-icon input-icon icon-wid-lg" name="search"></i-feather> 
+                                        <input type="search" class="form-control" placeholder="Search">
+                                    </div>
+                                </th>
+                                <th class="text-center">Date
+                                    <div class="input-icon-box common-calendar mt-2">
+                                        <i-feather class="feather-icon input-icon icon-wid-lg" name="calendar"></i-feather>
+                                        <input type="text" class="form-control cursor" placeholder="yyyy-mm-dd" ngbDatepicker #date="ngbDatepicker" (click)="date.toggle()">
+                                        <i-feather class="feather-icon input-icon select-arrow icon-wid-lg cursor" name="chevron-down" (click)="date.toggle()"></i-feather>
+                                    </div>
+                                </th>
+                                <th class="text-center">Status
+                                    <div class="input-icon-box mt-2">
+                                        <select class="form-control pl-3">
+                                            <option>Success</option>
+                                            <option>Failed</option>
+                                        </select>
+                                        <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="text-center sort-order cursor" scope="col" sortable="plan" (sort)="onSort($event)">Plan</th>
+                                <th class="text-center sort-order cursor" scope="col" sortable="paymentType" (sort)="onSort($event)">Payment Type</th>
+                                <th class="text-center sort-order cursor" scope="col" sortable="amount" (sort)="onSort($event)">Amount</th>
+                                <th class="text-center sort-order cursor" scope="col" sortable="date" (sort)="onSort($event)">Date</th>
+                                <th class="text-center sort-order cursor" scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+                              </tr>
+                        </thead>
+                        <p></p>
+                        <tbody>
+                            <tr *ngFor="let paymenthistorydata of paymentHistoryData">
+                                <td class="text-center">
+                                    <span class="badge cus-badge badge-basic" *ngIf="paymenthistorydata.sub_name == 'BASIC'">{{paymenthistorydata.sub_name}}</span>
+                                    <span class="badge cus-badge badge-elite" *ngIf="paymenthistorydata.sub_name == 'Elite'">{{paymenthistorydata.sub_name}}</span>
+                                    <span class="badge cus-badge badge-vip" *ngIf="paymenthistorydata.sub_name == 'VIP'">{{paymenthistorydata.sub_name}}</span>
+                                </td>
+                                <td class="text-center">Subscription</td>
+                                <td class="text-center">${{paymenthistorydata.sub_amount}}</td>
+                                <td class="text-center">{{paymenthistorydata.created_on | date: 'medium'}}</td>
+                                <td class="text-center">
+                                    <span class="text-success" *ngIf="paymenthistorydata.sub_status == 'Paid'">{{paymenthistorydata.sub_status}}</span>
+                                    <span class="text-danger" *ngIf="paymenthistorydata.sub_status == 'Failed'">{{paymenthistorydata.sub_status}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><a routerLink="profile"><span class="badge cus-badge badge-elite">E-lite</span></a></td>
+                                <td class="text-center">Subscribe</td>
+                                <td class="text-center">Credit <span class="d-block fs-lss">XXXX XXXX 8590 3732</span></td>
+                                <td class="text-center">Jan 25,2021</td>
+                                <td class="text-center"><span class="text-danger">Failed</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><a routerLink="profile"><span class="badge cus-badge badge-basic">Basic</span></a></td>
+                                <td class="text-center">Subscribe</td>
+                                <td class="text-center">Credit <span class="d-block fs-lss">XXXX XXXX 8590 3732</span></td>
+                                <td class="text-center">Jan 25,2021</td>
+                                <td class="text-center"><span class="text-success">Success</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><a routerLink="profile"><span class="badge cus-badge badge-vip">Vip</span></a></td>
+                                <td class="text-center">Subscribe</td>
+                                <td class="text-center">Credit <span class="d-block fs-lss">XXXX XXXX 8590 3732</span></td>
+                                <td class="text-center">Jan 25,2021</td>
+                                <td class="text-center"><span class="text-success">Success</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><a routerLink="profile"><span class="badge cus-badge badge-basic">Basic</span></a></td>
+                                <td class="text-center">Subscribe</td>
+                                <td class="text-center">Credit <span class="d-block fs-lss">XXXX XXXX 8590 3732</span></td>
+                                <td class="text-center">Jan 25,2021</td>
+                                <td class="text-center"><span class="text-danger">Failed</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><a routerLink="profile"><span class="badge cus-badge badge-elite">E-lite</span></a></td>
+                                <td class="text-center">Subscribe</td>
+                                <td class="text-center">Credit <span class="d-block fs-lss">XXXX XXXX 8590 3732</span></td>
+                                <td class="text-center">Jan 25,2021</td>
+                                <td class="text-center"><span class="text-success">Success</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><a routerLink="profile"><span class="badge cus-badge badge-basic">Basic</span></a></td>
+                                <td class="text-center">Subscribe</td>
+                                <td class="text-center">Credit <span class="d-block fs-lss">XXXX XXXX 8590 3732</span></td>
+                                <td class="text-center">Jan 25,2021</td>
+                                <td class="text-center"><span class="text-success">Success</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><a routerLink="profile"><span class="badge cus-badge badge-basic">Basic</span></a></td>
+                                <td class="text-center">Subscribe</td>
+                                <td class="text-center">Credit <span class="d-block fs-lss">XXXX XXXX 8590 3732</span></td>
+                                <td class="text-center">Jan 25,2021</td>
+                                <td class="text-center"><span class="text-success">Success</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination mt-2">
+                        <ul class="d-flex common-pagination">
+                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0)" tabindex="-1"><i-feather class="feather-icon icon-wid-lg mr-2" name="arrow-left"></i-feather> <span class="res-hide">Previous</span></a></li>
+                            <li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0)">4</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0)">5</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0)">6</a></li>
+                            <li class="page-item"><a class="page-link" href="javascript:void(0)"><span class="res-hide">Next</span> <i-feather class="feather-icon icon-wid-lg ml-2" name="arrow-right"></i-feather></a></li>
+                        </ul>
+                    </div>
+                    <div class="pagination mt-2" *ngIf="paymentHistoryData != ''">
+                        <div class="d-flex common-pagination">
+                            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="paymentDatatable()">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="text-center" *ngIf="paymentHistoryData == ''">
+                    <img src="/assets/images/data_not_found.png" alt="Image">
+                </div>
+              </ng-template>
+            </ng-container>
+            <ng-container ngbNavItem>
+              <a ngbNavLink>Watch History</a>
+              <ng-template ngbNavContent>
+                <div class="row" *ngIf="watchHistoryData != ''">
+                    <div class="col-list-lg col-lg-6 col-md-6 col-sm-6 col-12 mb-4" *ngFor="let watchhistorydata of watchHistoryData">
+                        <div class="watch-hcard">
+                            <div class="watch-hcard-img">
+                                <img src="{{watchhistorydata.cover}}" alt="Image">
+                            </div>
+                            <div class="watch-hcard-body">
+                                <h5 class="mt-3 mb-3">{{watchhistorydata.media_name}}</h5>
+                                <div class="d-flex justify-content-center mt-2">
+                                    <div class="watch-hdt-col">
+                                        <i-feather name="calendar" class="feather-icon icon-wid-lg"></i-feather>
+                                        <p class="fs-lss text-heading mt-2">{{watchhistorydata.created_on | date}}</p>
+                                    </div>
+                                    <div class="watch-hdt-col">
+                                        <i-feather name="clock" class="feather-icon icon-wid-lg"></i-feather>
+                                        <p class="fs-lss text-heading mt-2">{{watchhistorydata.created_on | date: 'hh:mm a'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" *ngIf="watchHistoryData == ''">
+                    <img src="/assets/images/data_not_found.png" alt="Image">
+                </div>
+              </ng-template>
+            </ng-container>
+          </nav>
+          <div [ngbNavOutlet]="nav" class="mt-4 common-scroll history-tab-container"></div>
+    </div>
+</div>

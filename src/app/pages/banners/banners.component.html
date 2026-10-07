@@ -1,0 +1,93 @@
+<div class="pages-body">
+    <h2 class="page-title">Banners</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/dashboard"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">Banners</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="banner-tabs">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" routerLink="/banners">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="movies">Movies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="tvshows">TV Shows</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="kids">Kids</a>
+                </li>
+            </ul>
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="form-group mb-0">
+                        <div class="input-icon-box">
+                            <i-feather name="search" class="feather-icon input-icon icon-wid-lg"></i-feather>
+                            <input type="text" placeholder="Search for Movies and TV Shows" class="form-control" (keyup)="getsearchhomemedia($event)" (keydown)="getsearchhomemedia($event)">
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div id="infinite-list" class="banner-set-grid common-scroll" infiniteScroll
+                            [infiniteScrollDistance]="3"
+                            [scrollWindow]="false"
+                            (scrolled)="onScrollDown()">
+                            <div class="row">
+                                <div class="col-cardres-xl col-lg-10 col-md-10 col-sm-12 col-12 mb-4" *ngFor="let homeMedia of homeMedias; let i = index">
+                                    <div class="grid-list-card grid-list-card">
+                                        <div class="grid-list-card-image">
+                                            <img src="{{homeMedia.cover}}" alt="Image">
+                                        </div>
+                                        <div class="grid-list-card-body">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span class="fs-lss">{{homeMedia.released_date | date:'mediumDate'}}</span>
+                                                <span class="re-language fs-lss">{{homeMedia.native_lang}}</span>
+                                            </div>
+                                            <h5 class="desc-ellipsize-l1">{{homeMedia.media_name}}</h5>
+                                            <p class="desc-ellipsize-l3 list-card-desc">{{homeMedia.description}}</p>
+                                            <div class="common-checkobx mt-2" *ngIf="bannersSelected.indexOf(homeMedia.media_id) === -1; else notChecked">
+                                                <input type="checkbox" id="set-homemedia-{{i}}" [checked]="bannersSelected.indexOf(homeMedia.media_id) !== -1" 
+                                                (change)="selectBannerClick(homeMedia.media_id, homeMedia.media_name, homeMedia.cover, homeMedia.media_type)">
+                                                <label for="set-homemedia-{{i}}" class="checkbox-label cursor fs-ls mb-0">Select {{homeMedia.media_type}} to set banner</label>
+                                            </div>
+                                            <ng-template #notChecked>
+                                                <div class="text-center mt-2">
+                                                    <p class="fs-ls banner-set">Already set as banner</p>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center" *ngIf="homeMedias == ''">
+                                <img src="/assets/images/data_not_found.png" alt="Image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-4">
+                    <div class="banner-get-grid common-scroll">
+                        <div class="row">
+                            <div class="res-col-full col-lg-12 col-md-12 col-sm-12 col-12" *ngFor="let selectedbannerdata of selectedBannerData">
+                                <div class="selected-item-row">
+                                    <div class="selected-item-image">
+                                        <img src="{{selectedbannerdata.cover}}" alt="Image">
+                                    </div>
+                                    <div class="selected-item-name">
+                                        <h5 class="mb-0">{{selectedbannerdata.media_name}}</h5>
+                                    </div>
+                                    <a class="delete-banner" placement="bottom" ngbTooltip="Delete" (click)="deleteBanner(selectedbannerdata.media_id)">
+                                        <i-feather class="feather-icon icon-cancel cursor" name="x"></i-feather>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>

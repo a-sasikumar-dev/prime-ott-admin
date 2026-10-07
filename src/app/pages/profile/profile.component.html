@@ -1,0 +1,199 @@
+<div class="pages-body">
+    <h2 class="page-title">Admin Profile</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/dashboard"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">Profile</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <nav ngbNav #nav="ngbNav" class="profile-tabs">
+            <ng-container ngbNavItem>
+              <a ngbNavLink>Profile</a>
+              <ng-template ngbNavContent>
+                <div class="profile-information">
+                    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                            <div class="image-upload" *ngIf="fileUpload">
+                                <img [src]="imageUrl" alt="Image">
+                                <div class="overlay-choose">
+                                    <input type="file" class="image-choose" (change)="onImagePicked($event)">
+                                    <span class="upload-link">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 0 24 24" width="34px" fill="#fff"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"/></svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="file-circle-progress" *ngIf="fileCircleProgress">
+                                <span class="prgress-close cursor">
+                                    <i-feather class="feather-icon icon-wid-md" name="x"></i-feather>
+                                </span>
+                                <circle-progress [percent]="progress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="70" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                            </div>
+                        </div>
+                        <div class="profile-form-container">
+                            <div *ngIf="filledForm">
+                                <button type="button" class="common-button border-btn min-wid-btn mx-auto mt-4" (click)="editClick()">Edit Profile</button>
+                                <div class="d-flex align-items-center justify-content-center text-heading mt-4"><i-feather class="feather-icon icon-wid-lg icon-m-color mr-3" name="user"></i-feather> {{fullname}}</div>
+                                <div class="d-flex align-items-center justify-content-center text-heading mt-4"><i-feather class="feather-icon icon-wid-lg text-success mr-3" name="phone"></i-feather> {{phone}}</div>
+                                <div class="d-flex align-items-center justify-content-center text-heading mt-4"><i-feather class="feather-icon icon-wid-lg text-skyblue mr-3" name="mail"></i-feather> {{email}}</div>
+                            </div>
+                            <div *ngIf="updateForm" class="slideup-animation">
+                                <div class="form-group">
+                                    <label class="fs-ls">Full Name</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        formControlName="fullname"
+                                        [ngClass]="{'textfield-error': submitted && profileForm.controls.fullname.invalid}"
+                                    >
+                                    <p class="form-invalid-error" *ngIf="profileForm.controls.fullname.invalid && submitted">Please enter full name</p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="fs-ls">Phone Number</label>
+                                    <input 
+                                        type="tel" 
+                                        class="form-control" 
+                                        formControlName="phone"
+                                        [ngClass]="{'textfield-error': submitted && profileForm.controls.phone.invalid}"
+                                    >
+                                    <p class="form-invalid-error" *ngIf="profileForm.controls.phone.invalid && submitted">Please enter phone number</p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="fs-ls">Email</label>
+                                    <input 
+                                        type="email" 
+                                        class="form-control" 
+                                        formControlName="email"
+                                        [ngClass]="{'textfield-error': submitted && profileForm.controls.email.invalid}"
+                                    >
+                                    <p class="form-invalid-error" *ngIf="profileForm.controls.email.invalid && submitted">Please enter email</p>
+                                </div>
+                                <div class="d-sm-flex justify-content-center uc-btn">
+                                    <button type="submit" class="common-button min-wid-btn mt-4 mr-4">
+                                        <svg *ngIf="isLoading" class="loader-icon mr-2" aria-hidden="true" width="20" height="20" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg> Update</button>
+                                    <button type="button" class="common-button danger-btn min-wid-btn mt-4" (click)="updateClick()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+              </ng-template>
+            </ng-container>
+            <ng-container ngbNavItem>
+              <a ngbNavLink>Password</a>
+              <ng-template ngbNavContent>
+                <div class="profile-information">
+                    <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()">
+                        <div class="form-group">
+                            <label class="fs-ls">Current Password</label>
+                            <div class="input-icon-box" *ngIf="eyeOn">
+                                <input 
+                                    type="password" 
+                                    class="form-control pl-3" 
+                                    placeholder="*************"
+                                    formControlName="currentpassword"
+                                    [ngClass]="{'textfield-error': submitted && passwordForm.controls.currentpassword.invalid}"
+                                >
+                                <i-feather class="feather-icon input-icon right-align icon-wid-lg cursor" name="eye" (click)="eyeOnClick()"></i-feather>
+                            </div>
+                            <div class="input-icon-box" *ngIf="eyeOff">
+                                <input 
+                                    type="text" 
+                                    class="form-control pl-3" 
+                                    placeholder="*************"
+                                    formControlName="currentpassword"
+                                    [ngClass]="{'textfield-error': submitted && passwordForm.controls.currentpassword.invalid}"
+                                >
+                                <i-feather class="feather-icon input-icon right-align icon-wid-lg cursor" name="eye-off" (click)="eyeOffClick()"></i-feather>
+                            </div>
+                            <p class="form-invalid-error" *ngIf="passwordForm.controls.currentpassword.invalid && submitted">Please enter current password</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-ls">New Password</label>
+                            <div class="input-icon-box" *ngIf="eyeOn_1">
+                                <input
+                                    type="password"
+                                    class="form-control pl-3"
+                                    placeholder="*************"
+                                    formControlName="newpassword"
+                                    [ngClass]="{'textfield-error': submitted && passwordForm.controls.newpassword.invalid}"
+                                >
+                                <i-feather class="feather-icon input-icon right-align icon-wid-lg cursor" name="eye" (click)="eyeOnClick_1()"></i-feather>
+                            </div>
+                            <div class="input-icon-box" *ngIf="eyeOff_1">
+                                <input 
+                                    type="text" 
+                                    class="form-control pl-3" 
+                                    placeholder="*************"
+                                    formControlName="newpassword"
+                                    [ngClass]="{'textfield-error': submitted && passwordForm.controls.newpassword.invalid}"
+                                >
+                                <i-feather class="feather-icon input-icon right-align icon-wid-lg cursor" name="eye-off" (click)="eyeOffClick_1()"></i-feather>
+                            </div>
+                            <p class="form-invalid-error" *ngIf="passwordForm.controls.newpassword.invalid && submitted">Please enter new password</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-ls">Confirm New Password</label>
+                            <div class="input-icon-box" *ngIf="eyeOn_2">
+                                <input
+                                    type="password"
+                                    class="form-control pl-3"
+                                    placeholder="*************"
+                                    formControlName="confirmpassword"
+                                    [ngClass]="{'textfield-error': submitted && passwordForm.controls.confirmpassword.invalid}"
+                                >
+                                <i-feather class="feather-icon input-icon right-align icon-wid-lg cursor" name="eye" (click)="eyeOnClick_2()"></i-feather>
+                            </div>
+                            <div class="input-icon-box" *ngIf="eyeOff_2">
+                                <input 
+                                    type="text" 
+                                    class="form-control pl-3" 
+                                    placeholder="*************"
+                                    formControlName="confirmpassword"
+                                    [ngClass]="{'textfield-error': submitted && passwordForm.controls.confirmpassword.invalid}"
+                                >
+                                <i-feather class="feather-icon input-icon right-align icon-wid-lg cursor" name="eye-off" (click)="eyeOffClick_2()"></i-feather>
+                            </div>
+                            <p class="form-invalid-error" *ngIf="passwordForm.controls.confirmpassword.invalid && submitted">Please enter confirm new password</p>
+                        </div>
+                        <button type="submit" class="common-button min-wid-btn mx-auto mt-4">
+                            <svg *ngIf="isLoading" class="loader-icon mr-2" aria-hidden="true" width="20" height="20" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg> Update
+                        </button>
+                    </form>
+                </div>
+              </ng-template>
+            </ng-container>
+            <!-- <ng-container ngbNavItem>
+              <a ngbNavLink>Social</a>
+              <ng-template ngbNavContent>
+                <div class="profile-information">
+                    <form>
+                        <div class="form-group">
+                            <label class="fs-ls">Facebook</label>
+                            <input type="text" class="form-control" placeholder="https://www.facebook.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-ls">Instagram</label>
+                            <input type="text" class="form-control" placeholder="https://www.instagram.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-ls">Twitter</label>
+                            <input type="text" class="form-control" placeholder="https://twitter.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-ls">Pinterest</label>
+                            <input type="text" class="form-control" placeholder="https://www.pinterest.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-ls">Linkedin</label>
+                            <input type="text" class="form-control" placeholder="https://www.linkedin.com">
+                        </div>
+                        <button type="submit" class="common-button min-wid-btn mx-auto mt-4">Save</button>
+                    </form>
+                </div>
+              </ng-template>
+            </ng-container> -->
+          </nav>
+          <div [ngbNavOutlet]="nav" class="tab-container"></div>
+    </div>
+</div>

@@ -1,0 +1,254 @@
+<div class="pages-body">
+    <h2 class="page-title">Customers</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">Customers</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="row justify-content-center">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
+                <div class="customer-card">
+                    <span class="cutomer-icon orange">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fff"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/></svg>
+                    </span>
+                    <h3 class="mt-3">${{totalRevenue}}</h3>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <p class="mb-0 fs-ls">Total Revenue</p>
+                        <span class="d-flex align-items-center fs-ls fw-thick text-success">
+                            <i-feather class="feather-icon icon-wid-lg mr-1" name="arrow-up"></i-feather> <span>+350</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
+                <div class="customer-card">
+                    <span class="cutomer-icon violet">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fff"><rect fill="none" height="24" width="24"/><g><path d="M4,13c1.1,0,2-0.9,2-2c0-1.1-0.9-2-2-2s-2,0.9-2,2C2,12.1,2.9,13,4,13z M5.13,14.1C4.76,14.04,4.39,14,4,14 c-0.99,0-1.93,0.21-2.78,0.58C0.48,14.9,0,15.62,0,16.43V18l4.5,0v-1.61C4.5,15.56,4.73,14.78,5.13,14.1z M20,13c1.1,0,2-0.9,2-2 c0-1.1-0.9-2-2-2s-2,0.9-2,2C18,12.1,18.9,13,20,13z M24,16.43c0-0.81-0.48-1.53-1.22-1.85C21.93,14.21,20.99,14,20,14 c-0.39,0-0.76,0.04-1.13,0.1c0.4,0.68,0.63,1.46,0.63,2.29V18l4.5,0V16.43z M16.24,13.65c-1.17-0.52-2.61-0.9-4.24-0.9 c-1.63,0-3.07,0.39-4.24,0.9C6.68,14.13,6,15.21,6,16.39V18h12v-1.61C18,15.21,17.32,14.13,16.24,13.65z M8.07,16 c0.09-0.23,0.13-0.39,0.91-0.69c0.97-0.38,1.99-0.56,3.02-0.56s2.05,0.18,3.02,0.56c0.77,0.3,0.81,0.46,0.91,0.69H8.07z M12,8 c0.55,0,1,0.45,1,1s-0.45,1-1,1s-1-0.45-1-1S11.45,8,12,8 M12,6c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3s3-1.34,3-3 C15,7.34,13.66,6,12,6L12,6z"/></g></svg>
+                    </span>
+                    <h3 class="mt-3">{{totalCustomers}}</h3>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-0 fs-ls">Total Customers</p>
+                        <span class="d-flex align-items-center fs-ls fw-thick text-success">
+                            <i-feather class="feather-icon icon-wid-lg mr-1" name="arrow-up"></i-feather> <span>+350</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
+                <div class="customer-card">
+                    <span class="cutomer-icon green">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fff"><rect fill="none" height="24" width="24"/><path d="M18.6,19.5H21v2h-6v-6h2v2.73c1.83-1.47,3-3.71,3-6.23c0-4.07-3.06-7.44-7-7.93V2.05c5.05,0.5,9,4.76,9,9.95 C22,14.99,20.68,17.67,18.6,19.5z M4,12c0-2.52,1.17-4.77,3-6.23V8.5h2v-6H3v2h2.4C3.32,6.33,2,9.01,2,12c0,5.19,3.95,9.45,9,9.95 v-2.02C7.06,19.44,4,16.07,4,12z M16.24,8.11l-5.66,5.66l-2.83-2.83l-1.41,1.41l4.24,4.24l7.07-7.07L16.24,8.11z"/></svg>
+                    </span>
+                    <h3 class="mt-3">{{activeCustomers}}</h3>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <p class="mb-0 fs-ls">Active Customers</p>
+                        <span class="d-flex align-items-center fs-ls fw-thick text-success">
+                            <i-feather class="feather-icon icon-wid-lg mr-1" name="arrow-up"></i-feather> <span>+350</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
+                <div class="customer-card">
+                    <span class="cutomer-icon pink">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#fff"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z"/></svg>
+                    </span>
+                    <h3 class="mt-3">{{suspendCustomers}}</h3>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <p class="mb-0 fs-ls">Suspended Customers</p>
+                        <span class="d-flex fs-ls fw-thick text-danger">
+                            <i-feather class="feather-icon icon-wid-lg mr-1" name="arrow-down"></i-feather> <span>-150</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <form>
+            <div class="row justify-content-center">
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <div class="input-icon-box">
+                            <i-feather class="feather-icon input-icon icon-wid-lg" name="search"></i-feather>
+                            <input type="search" class="form-control" placeholder="Search">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <div class="input-icon-box">
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                            <select class="form-control">
+                                <option>Language</option>
+                                <option>Tamil</option>
+                                <option>English</option>
+                                <option>Hindi</option>
+                                <option>Malayalam</option>
+                                <option>Kannadam</option>
+                                <option>Korean</option>
+                                <option>Chineesh</option>
+                            </select>
+                            <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <div class="input-icon-box common-calendar">
+                            <i-feather class="feather-icon input-icon icon-wid-lg" name="calendar"></i-feather>
+                            <input type="text" class="form-control cursor" placeholder="yyyy-mm-dd" ngbDatepicker #date="ngbDatepicker" (click)="date.toggle()">
+                            <i-feather class="feather-icon input-icon select-arrow icon-wid-lg cursor" name="chevron-down" (click)="date.toggle()"></i-feather>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <div class="input-icon-box">
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.36 6l.4 2H18v6h-3.36l-.4-2H7V6h5.36M14 4H5v17h2v-7h5.6l.4 2h7V6h-5.6L14 4z"/></svg>
+                            <select class="form-control">
+                                <option>Country</option>
+                                <option>Action</option>
+                                <option>Adventure</option>
+                                <option>Biography</option>
+                                <option>Comedy</option>
+                                <option>Crime</option>
+                                <option>Documentary</option>
+                                <option>Drama</option>
+                                <option>Family</option>
+                                <option>Fantasy</option>
+                                <option>Film-Noir</option>
+                                <option>Game-Show</option>
+                                <option>History</option>
+                                <option>Horror</option>
+                                <option>Music</option>
+                                <option>Musical</option>
+                                <option>Mystery</option>
+                                <option>News</option>
+                                <option>Reality-TV</option>
+                                <option>Romance</option>
+                                <option>Sci-Fi</option>
+                                <option>Sport</option>
+                                <option>Talk-Show</option>
+                                <option>Thriller</option>
+                                <option>War</option>
+                                <option>Western</option>
+                            </select>
+                            <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form> -->
+        <div class="table-responsive customer-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Profile</th>
+                        <th class="text-center">
+                            <span>Name</span>
+                            <div class="input-icon-box mt-2">
+                                <i-feather class="feather-icon input-icon icon-wid-lg" name="search"></i-feather>
+                                <input type="text" class="form-control" placeholder="Search" (keyup)="searchcustomers($event, 'Name')">
+                            </div>
+                        </th>
+                        <th class="text-center">Phone No
+                            <div class="input-icon-box mt-2">
+                                <i-feather class="feather-icon input-icon icon-wid-lg" name="search"></i-feather>
+                                <input type="text" class="form-control" placeholder="Search" (keyup)="searchcustomers($event, 'Phone')">
+                            </div>
+                        </th>
+                        <th class="text-center">E-mail
+                            <div class="input-icon-box mt-2">
+                                <i-feather class="feather-icon input-icon icon-wid-lg" name="search"></i-feather>
+                                <input type="text" class="form-control" placeholder="Search" (keyup)="searchcustomers($event, 'Email')">
+                            </div>
+                        </th>
+                        <th class="text-center">Plan
+                            <div class="input-icon-box mt-2">
+                                <select class="form-control search-slelect pl-3" (change)="searchcustomers($event, 'Plan')">
+                                    <option></option>
+                                    <option value="All">All</option>
+                                    <option value="D1234i593ktsn36ny">VIP</option>
+                                    <option value="sktw45KIOkts456UV">E-LITE</option>
+                                    <option value="sktwi593ktsn2yvv">BASIC</option>
+                                    <option value="0">Not Subscribed</option>
+                                </select>
+                                <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                            </div>
+                        </th>
+                        <th class="text-center">Country
+                            <div class="input-icon-box mt-2">
+                                <i-feather class="feather-icon input-icon icon-wid-lg" name="search"></i-feather>
+                                <input type="text" class="form-control" placeholder="Search" (keyup)="searchcustomers($event, 'Country')">
+                            </div>
+                        </th>
+                        <th class="text-center">Subscription Status
+                            <div class="input-icon-box mt-2">
+                                <select class="form-control search-slelect pl-3" (change)="searchcustomers($event, 'Status')">
+                                    <option></option>
+                                    <option value="All">All</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Suspend">Suspend</option>
+                                </select>
+                                <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                            </div>
+                        </th>
+                        <th class="text-center">Join Date
+                            <div class="input-icon-box common-calendar calander-right mt-2">
+                                <i-feather class="feather-icon input-icon icon-wid-lg" name="calendar"></i-feather>
+                                <input type="text" class="form-control cursor" placeholder="yyyy-mm-dd" ngbDatepicker #date_1="ngbDatepicker" (click)="date_1.toggle()">
+                                <i-feather class="feather-icon input-icon select-arrow icon-wid-lg cursor" name="chevron-down" (click)="date_1.toggle()"></i-feather>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <p></p>
+                <tbody>
+                    <tr *ngFor="let customersdata of getCustomersData">
+                        <td class="text-center">
+                            <a routerLink="profile" [queryParams]="{cId: customersdata.customer_id}" *ngIf="customersdata.profilepicture != null">
+                                <img src="{{customersdata.profilepicture}}" alt="image" class="profile_poto">
+                            </a>
+                            <a routerLink="profile" [queryParams]="{cId: customersdata.customer_id}" *ngIf="customersdata.profilepicture == null"> 
+                                <img src="assets/images/avatardefault.png" alt="image" class="profile_poto">
+                            </a>
+                        </td>
+                        <td class="text-center"><a routerLink="profile" [queryParams]="{cId: customersdata.customer_id}">{{customersdata.customer_name}}</a></td>
+                        <td class="text-center"><a routerLink="profile" [queryParams]="{cId: customersdata.customer_id}">{{customersdata.customer_phone}}</a></td>
+                        <td class="text-center"><a routerLink="profile" [queryParams]="{cId: customersdata.customer_id}">{{customersdata.customer_email}}</a></td>
+                        <td class="text-center">
+                            <a routerLink="profile" [queryParams]="{cId: customersdata.customer_id}">
+                                <span class="badge cus-badge badge-basic" *ngIf="customersdata.sub_id != 0">{{customersdata.sub_name}}</span>
+                                <span class="badge cus-badge text-danger" *ngIf="customersdata.sub_id == 0">{{customersdata.sub_name}}</span>
+                            </a>
+                        </td>
+                        <td class="text-center"><a routerLink="profile" [queryParams]="{cId: customersdata.customer_id}">{{customersdata.country}}</a></td>
+                        <td class="text-center">
+                            <a routerLink="profile" [queryParams]="{cId: customersdata.customer_id}">
+                                <span class="status-customer text-success active" *ngIf="customersdata.sub_status == 'Active'">Active</span>
+                                <span class="status-customer text-danger suspend" *ngIf="customersdata.sub_status == 'Suspend'">Suspend</span>
+                            </a>
+                        </td>
+                        <td class="text-center"><a routerLink="profile" [queryParams]="{cId: customersdata.customer_id}">{{customersdata.created_on | date}}</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center" *ngIf="getCustomersData == ''">
+            <img src="/assets/images/data_not_found.png" alt="Image">
+        </div>
+        <div class="pagination mt-2" *ngIf="getCustomersData != ''">
+            <!-- <div class="d-flex common-pagination">
+                <button type="button" class="page-item" disabled><a class="page-link disabled" [ngClass]="{'disabled': prevButton === true}" (click)="paginationSelectClick(next - 1, $event)"><i-feather class="feather-icon icon-wid-lg mr-2" name="arrow-left"></i-feather> <span class="res-hide">Previous</span></a></button>
+                <button type="button" class="page-item" [ngClass]="{'active': i==next}" *ngFor="let pages of counter(totalPages); let i = index" (click)="paginationSelectClick(i, $event)"><a class="page-link">{{i + 1}}</a></button>
+                <button type="button" class="page-item" disabled><a class="page-link disabled" [ngClass]="{'disabled': nextButton === true}" (click)="paginationSelectClick(next + 1, $event)"><span class="res-hide">Next</span> <i-feather class="feather-icon icon-wid-lg ml-2" name="arrow-right"></i-feather></a></button>
+            </div> -->
+            <div class="d-flex align-items-center common-pagination">
+                <button type="button" class="page-item" disabled><a class="page-link disabled" [ngClass]="{'disabled': prevButton === true}" (click)="paginationSelectClick(next - 1, $event)"><i-feather class="feather-icon icon-wid-lg mr-2" name="arrow-left"></i-feather> <span class="res-hide">Previous</span></a></button>
+                <div class="page-index">{{pageIndex}} / {{totalPages}}</div>
+                <button type="button" class="page-item" disabled><a class="page-link disabled" [ngClass]="{'disabled': nextButton === true}" (click)="paginationSelectClick(next + 1, $event)"><span class="res-hide">Next</span> <i-feather class="feather-icon icon-wid-lg ml-2" name="arrow-right"></i-feather></a></button>
+            </div>
+        </div>
+    </div>
+</div>

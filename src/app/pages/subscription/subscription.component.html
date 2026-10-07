@@ -1,0 +1,106 @@
+<div class="pages-body">
+    <h2 class="page-title">Subscription</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/dashboard"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">Subscription</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="add-subscribe-container">
+            <button type="button" class="common-button border-btn ml-auto mt-1" (click)="toggleForm()"><i-feather class="feather-icon icon-wid-lg icon-m-color mr-2" name="plus"></i-feather> Add Subscription</button>
+            <form [ngClass]="status ? 'open-form' : 'close-form'" [formGroup]="subForm" (ngSubmit)="onSubmit()">
+                <div class="single-form-inputs-row">
+                    <div class="single-form-inputs-col">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Plan Name"
+                            formControlName="subName"
+                            [ngClass]="{'textfield-error': submitted && subForm.controls.subName.invalid}"
+                        >
+                        <p class="form-invalid-error" *ngIf="subForm.controls.subName.invalid && submitted">Please enter name</p>
+                    </div>
+                    <div class="single-form-inputs-col">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="No of Months"
+                            formControlName="subMonth"
+                            [ngClass]="{'textfield-error': submitted && subForm.controls.subMonth.invalid}"
+                        >
+                        <p class="form-invalid-error" *ngIf="subForm.controls.subMonth.invalid && submitted">Please enter month</p>
+                    </div>
+                    <div class="single-form-inputs-col">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Amount"
+                            formControlName="subAmount"
+                            [ngClass]="{'textfield-error': submitted && subForm.controls.subAmount.invalid}"
+                        >
+                        <p class="form-invalid-error" *ngIf="subForm.controls.subAmount.invalid && submitted">Please enter amount</p>
+                    </div>
+                    <div class="single-form-submit">
+                        <button type="submit" class="common-button">Save</button>
+                        <span class="close-input cursor" (click)="toggleForm()"><i-feather class="feather-icon icon-wid-md icon-cancel" name="x"></i-feather></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="sub-card-xl-6 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-4" *ngFor="let subPlan of subPlans; let i = index">
+                <div class="subscribe-card success-bg">
+                    <div class="subscribe-header">
+                        <span class="badge cus-badge text-heading badge-vip">{{subPlan.sub_name}}</span>
+                        <!-- <span class="status-customer text-success active">Active</span> -->
+                        <!-- <div ngbDropdown>
+                            <div class="filter-flex d-filter">
+                                <div ngbDropdown>
+                                    <div id="subscirbedrop" ngbDropdownToggle>
+                                        <div class="filter-select">
+                                            <span>{{subscirbeSelector}}</span> <i-feather class="feather-icon select-arrow icon-wid-md" name="chevron-down"></i-feather>
+                                        </div>
+                                    </div>
+                                    <ul ngbDropdownMenu aria-labelledby="subscirbedrop">
+                                        <li ngbDropdownItem (click)="ngDropDwonClick('Active')"><a class="list-item">Active</a></li>
+                                        <li ngbDropdownItem (click)="ngDropDwonClick('Suspend')"><a class="list-item">Suspend</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
+                        <label for="switch-p-{{i + 1}}" class="toggle-switch-box" *ngIf="subPlan.sub_status == 'Active'">
+                            <input type="checkbox" name="hold" checked id="switch-p-{{i + 1}}" (change)="setSubStatusClick(subPlan.s_id,'Suspend',$event)">
+                            <span class="toggle-switch-item" data-tg-on="Active" data-tg-off="Suspend">
+                              <span class="switch-button"></span>
+                            </span>
+                        </label>
+                        <label for="switch-p-{{i + 1}}" class="toggle-switch-box" *ngIf="subPlan.sub_status == 'Suspend'">
+                            <input type="checkbox" name="hold" id="switch-p-{{i + 1}}" (change)="setSubStatusClick(subPlan.s_id,'Active',$event)">
+                            <span class="toggle-switch-item" data-tg-on="Active" data-tg-off="Suspend">
+                              <span class="switch-button"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="subscribe-body">
+                        <div class="subscribe-info">
+                            <p class="fs-ls text-heading">Months</p>
+                            <h4 class="mt-4 mb-0 wb-all">{{subPlan.sub_month}}</h4>
+                        </div>
+                        <div class="subscribe-info">
+                            <p class="fs-ls text-heading">Subscribers</p>
+                            <h4 class="mt-4 mb-0 wb-all">{{subPlan.totalsubscribers}}</h4>
+                        </div>
+                        <div class="subscribe-info">
+                            <p class="fs-ls text-heading">Active Users</p>
+                            <h4 class="mt-4 mb-0 wb-all">{{subPlan.activesubscribers}}</h4>
+                        </div>
+                        <div class="subscribe-info">
+                            <h3 class="text-success mb-0 wb-all">${{subPlan.sub_amount}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

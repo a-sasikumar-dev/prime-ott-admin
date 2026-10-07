@@ -1,0 +1,1108 @@
+<div class="pages-body">
+    <h2 class="page-title">Add Movie</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/dashboard"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center">kids</li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/kids/movies">Movies</a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">Add Movie</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7 col-md-6 col-sm-6 col-12">
+                <div class="add-details-section" *ngIf="basicInformation">
+                    <h4>1. Movie Basic Information</h4>
+                    <form class="mt-4" [formGroup]="MovieBasicInfo" (ngSubmit)="basicInformationSubmit()">
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Movie Name</label>
+                                    <input 
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Movie Name"
+                                        formControlName="movieName"
+                                        [ngClass]="{'textfield-error': basicInfosubmitted && MovieBasicInfo.controls.movieName.invalid}"
+                                    >
+                                    <p class="form-invalid-error" *ngIf="MovieBasicInfo.controls.movieName.invalid && basicInfosubmitted">Please enter movie name</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Release Date</label>
+                                    <div class="input-icon-box common-calendar">
+                                        <i-feather class="feather-icon input-icon right-align icon-wid-lg cursor" name="calendar" (click)="date.toggle()"></i-feather>
+                                        <input 
+                                            type="text" 
+                                            class="form-control pl-3 cursor" 
+                                            placeholder="yyyy-mm-dd" 
+                                            formControlName="releasedDate"
+                                            ngbDatepicker #date="ngbDatepicker" (click)="date.toggle()"
+                                            [(ngModel)]="releasedDate"
+                                            [ngClass]="{'textfield-error': basicInfosubmitted && MovieBasicInfo.controls.releasedDate.invalid}"
+                                        >
+                                        <p class="form-invalid-error" *ngIf="MovieBasicInfo.controls.releasedDate.invalid && basicInfosubmitted">Please select released date</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Select Language</label>
+                                    <div class="input-icon-box">
+                                        <select class="form-control pl-3 cursor" 
+                                            formControlName="nativeLang"
+                                            [ngClass]="{'textfield-error': basicInfosubmitted && MovieBasicInfo.controls.nativeLang.invalid}"
+                                        >
+                                            <option value="English">English</option>
+                                            <option value="Tamil">Tamil</option>
+                                            <option value="Hindi">Hindi</option>
+                                            <option value="Malayalam">Malayalam</option>
+                                            <option value="Kannadam">Kannadam</option>
+                                            <option value="Korean">Korean</option>
+                                            <option value="Chineesh">Chineesh</option>
+                                        </select>
+                                        <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                                    </div>
+                                    <p class="form-invalid-error" *ngIf="MovieBasicInfo.controls.nativeLang.invalid && basicInfosubmitted">Please select native language</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Description</label>
+                                    <div class="form-group">
+                                        <textarea 
+                                            class="form-control pt-2" 
+                                            placeholder="Description"
+                                            rows="6"
+                                            formControlName="movieDescription"
+                                            [ngClass]="{'textfield-error': basicInfosubmitted && MovieBasicInfo.controls.movieDescription.invalid}"
+                                        ></textarea>
+                                        <p class="form-invalid-error" *ngIf="MovieBasicInfo.controls.movieDescription.invalid && basicInfosubmitted">Please enter movie description</p>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-img-xl-land col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <div class="file-upload">
+                                        <div class="image-up" *ngIf="!portraitUploading && portraitImageUrl == ''">
+                                            <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                            <input type="file" class="file-input" placeholder="Upload Image" (change)="onPortraitPicked($event)">
+                                            <h5 class="mt-4">Upload Portrait Image</h5>
+                                            <p class="fs-lss mt-3">(720x1080)</p>
+                                        </div>
+                                        <div class="file-circle-progress" *ngIf="portraitUploading">
+                                            <circle-progress [percent]="portraitUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="60" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                            <h5 class="mt-4">Uploading...</h5>
+                                        </div>
+                                        <div class="img-preview" *ngIf="portraitImageUrl != ''">
+                                            <img class="img-wh-full" src="{{portraitImageUrl}}" alt="Image">
+                                            <button type="button" class="close-btn" (click)="portraitClose()">
+                                                <i-feather class="feather-icon icon-cancel icon-wid-lg" name="x"></i-feather>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-img-xl-cover col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group mb-4">
+                                    <div class="file-upload">
+                                        <div class="image-up" *ngIf="!coverUploading && coverImageUrl == ''">
+                                            <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                            <input type="file" class="file-input" placeholder="Upload Image" (change)="onCoverPicked($event)">
+                                            <h5 class="mt-4">Upload Cover Image</h5>
+                                            <p class="fs-lss mt-3">(1080x720)</p>
+                                        </div>
+                                        <div class="file-circle-progress" *ngIf="coverUploading">
+                                            <circle-progress [percent]="coverUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="60" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                            <h5 class="mt-4">Uploading...</h5>
+                                        </div>
+                                        <div class="img-preview" *ngIf="coverImageUrl != ''">
+                                            <img class="img-wh-full" src="{{coverImageUrl}}" alt="Image">
+                                            <button type="button" class="close-btn" (click)="coverClose()">
+                                                <i-feather class="feather-icon icon-cancel icon-wid-lg" name="x"></i-feather>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reg-submit-btn">
+                            <button type="submit" class="common-button" [disabled]="basicInfoLoading">
+                                <svg *ngIf="basicInfoLoading" [ngClass]="{'loader-icon mr-2': basicInfoLoading}" aria-hidden="true" width="20" height="20" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg>
+                                <span class="ml-2">Next</span> <i-feather class="feather-icon icon-wid-lg ml-2" name="chevron-right"></i-feather>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="add-details-section" *ngIf="genreInformation">
+                    <h4>2. Movie Casting & Crew</h4>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label class="fs-ls">Starring</label>
+                                <a placement="right" ngbTooltip="Type and Enter to add Starring">
+                                    <i class="info-icon"></i>
+                                </a>
+                                <tag-input class="tags-control" [(ngModel)]="starring" [modelAsStrings]="true" [placeholder]="'Add Starring'" [secondaryPlaceholder]="'Add Starring'" [editable]="true"
+                                [ngClass]="{'textfield-error': isActorsFilled}" (keydown.enter)="validateCastAndCrew()"></tag-input>
+                                <p class="form-invalid-error" *ngIf="isActorsFilled">Please enter starring</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label class="fs-ls">Supporting Actors</label>
+                                <a placement="right" ngbTooltip="Type and Enter to add Supporting Actors">
+                                    <i class="info-icon"></i>
+                                </a>
+                                <tag-input class="tags-control" [(ngModel)]="supportingActors" [modelAsStrings]="true" [placeholder]="'Add Supporting Actors'" [secondaryPlaceholder]="'Add Supporting Actors'" [editable]="true"
+                                [ngClass]="{'textfield-error': isSupportingActorsFilled}" (keydown.enter)="validateCastAndCrew()"></tag-input>
+                                <p class="form-invalid-error" *ngIf="isSupportingActorsFilled">Please enter supporting actors</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label class="fs-ls">Directors</label>
+                                <a placement="right" ngbTooltip="Type and Enter to add Directors">
+                                    <i class="info-icon"></i>
+                                </a>
+                                <tag-input class="tags-control" [(ngModel)]="directors" [modelAsStrings]="true" [placeholder]="'Add Directors'" [secondaryPlaceholder]="'Add Directors'" [editable]="true"
+                                [ngClass]="{'textfield-error': isDirectorsFilled}" (keydown.enter)="validateCastAndCrew()"></tag-input>
+                                <p class="form-invalid-error" *ngIf="isDirectorsFilled">Please enter directors</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label class="fs-ls">Producers</label>
+                                <a placement="right" ngbTooltip="Type and Enter to add Producers">
+                                    <i class="info-icon"></i>
+                                </a>
+                                <tag-input class="tags-control" [(ngModel)]="producers" [modelAsStrings]="true" [placeholder]="'Add Producers'" [secondaryPlaceholder]="'Add Producers'" [editable]="true"
+                                [ngClass]="{'textfield-error': isProducersFilled}" (keydown.enter)="validateCastAndCrew()"></tag-input>
+                                <p class="form-invalid-error" *ngIf="isProducersFilled">Please enter producers</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form>
+                        <h4 class="mt-4">3. Certificate & Genre's</h4>
+                        <h5 class="mb-3 mt-4">Certificate</h5>
+                        <div class="form-group mb-4">
+                            <div class="common-radio-button">
+                                <div class="radio">
+                                    <input type="radio" id="U" name="certificate" value="U" [(ngModel)]="certificate">
+                                    <label for="U" class="radio-label">U</label>
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="A" name="certificate" value="A" [(ngModel)]="certificate">
+                                    <label for="A" class="radio-label">A</label>
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="U/A" name="certificate" value="U/A" [(ngModel)]="certificate">
+                                    <label for="U/A" class="radio-label">U/A</label>
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="U/A-7+" name="certificate" value="U/A-7+" [(ngModel)]="certificate">
+                                    <label for="U/A-7+" class="radio-label">U/A-7+</label>
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="U/A-13+" name="certificate" value="U/A-13+" [(ngModel)]="certificate">
+                                    <label for="U/A-13+" class="radio-label">U/A-13+</label>
+                                </div>
+                                <div class="radio">
+                                    <input type="radio" id="U/A-16+" name="certificate" value="U/A-16+" [(ngModel)]="certificate">
+                                    <label for="U/A-16+" class="radio-label">U/A-16+</label>
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Genre's</h5>
+                        <p class="form-invalid-error" *ngIf="isGenreFilled">Please select atleast one genre</p>
+                        <div class="form-group mb-4">
+                            <div class="select-checkbox-row">
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="action" [checked]="genre.indexOf('Action') != -1" (click)="addGenre('Action')">
+                                    <label class="cursor" for="action">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Action</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Action</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Action</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="adventure" [checked]="genre.indexOf('Adventure') != -1" (click)="addGenre('Adventure')">
+                                    <label class="cursor" for="adventure">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Adventure</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Adventure</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Adventure</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="animation" [checked]="genre.indexOf('Animation') != -1" (click)="addGenre('Animation')">
+                                    <label class="cursor" for="animation">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Animation</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Animation</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Animation</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="biography" [checked]="genre.indexOf('Biography') != -1" (click)="addGenre('Biography')">
+                                    <label class="cursor" for="biography">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Biography</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Biography</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Biography</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="comedy" [checked]="genre.indexOf('Comedy') != -1" (click)="addGenre('Comedy')">
+                                    <label class="cursor" for="comedy">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Comedy</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Comedy</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Comedy</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="crime" [checked]="genre.indexOf('Crime') != -1" (click)="addGenre('Crime')">
+                                    <label class="cursor" for="crime">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Crime</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Crime</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Crime</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="documentary" [checked]="genre.indexOf('Documentary') != -1" (click)="addGenre('Documentary')">
+                                    <label class="cursor" for="documentary">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Documentary</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Documentary</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Documentary</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="drama" [checked]="genre.indexOf('Drama') != -1" (click)="addGenre('Drama')">
+                                    <label class="cursor" for="drama">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Drama</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Drama</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Drama</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="family" [checked]="genre.indexOf('Family') != -1" (click)="addGenre('Family')">
+                                    <label class="cursor" for="family">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Family</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Family</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Family</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="fantasy" [checked]="genre.indexOf('Fantasy') != -1" (click)="addGenre('Fantasy')">
+                                    <label class="cursor" for="fantasy">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Fantasy</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Fantasy</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Fantasy</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="film-noir" [checked]="genre.indexOf('Film-Noir') != -1" (click)="addGenre('Film-Noir')">
+                                    <label class="cursor" for="film-noir">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Film-Noir</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Film-Noir</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Film-Noir</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="game-show" [checked]="genre.indexOf('Game-Show') != -1" (click)="addGenre('Game-Show')">
+                                    <label class="cursor" for="game-show">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Game-Show</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Game-Show</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Game-Show</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="history" [checked]="genre.indexOf('History') != -1" (click)="addGenre('History')">
+                                    <label class="cursor" for="history">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">History</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">History</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">History</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="horror" [checked]="genre.indexOf('Horror') != -1" (click)="addGenre('Horror')">
+                                    <label class="cursor" for="horror">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Horror</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Horror</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Horror</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="music" [checked]="genre.indexOf('Music') != -1" (click)="addGenre('Music')">
+                                    <label class="cursor" for="music">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Music</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Music</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Music</span>
+                                        </span>
+                                    </label>
+                                </div>
+    
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="musical" [checked]="genre.indexOf('Musical') != -1" (click)="addGenre('Musical')">
+                                    <label class="cursor" for="musical">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Musical</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Musical</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Musical</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="mystery" [checked]="genre.indexOf('Mystery') != -1" (click)="addGenre('Mystery')">
+                                    <label class="cursor" for="mystery">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Mystery</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Mystery</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Mystery</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="news" [checked]="genre.indexOf('News') != -1" (click)="addGenre('News')">
+                                    <label class="cursor" for="news">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">News</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">News</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">News</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="reality-tv" [checked]="genre.indexOf('Reality-TV') != -1" (click)="addGenre('Reality-TV')">
+                                    <label class="cursor" for="reality-tv">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Reality-TV</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Reality-TV</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Reality-TV</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="romance" [checked]="genre.indexOf('Romance') != -1" (click)="addGenre('Romance')">
+                                    <label class="cursor" for="romance">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Romance</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Romance</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Romance</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="sci-fi" [checked]="genre.indexOf('Sci-Fi') != -1" (click)="addGenre('Sci-Fi')">
+                                    <label class="cursor" for="sci-fi">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Sci-Fi</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Sci-Fi</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Sci-Fi</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="sport" [checked]="genre.indexOf('Sport') != -1" (click)="addGenre('Sport')">
+                                    <label class="cursor" for="sport">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Sport</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Sport</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Sport</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="talk-show" [checked]="genre.indexOf('Talk-Show') != -1" (click)="addGenre('Talk-Show')">
+                                    <label class="cursor" for="talk-show">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Talk-Show</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Talk-Show</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Talk-Show</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="thriller" [checked]="genre.indexOf('Thriller') != -1" (click)="addGenre('Thriller')">
+                                    <label class="cursor" for="thriller">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Thriller</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Thriller</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Thriller</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="war" [checked]="genre.indexOf('War') != -1" (click)="addGenre('War')">
+                                    <label class="cursor" for="war">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">War</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">War</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">War</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="western" [checked]="genre.indexOf('Western') != -1" (click)="addGenre('Western')">
+                                    <label class="cursor" for="western">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Western</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Western</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Western</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Content Advisory</h5>
+                        <p class="form-invalid-error" *ngIf="isContentAdvisoryFilled">Please select atleast one content advisory</p>
+                        <div class="form-group mb-4">
+                            <div class="select-checkbox-row">
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="smoking" [checked]="contentAdvisory.indexOf('Smoking') != -1" (click)="addContentAdvisory('Smoking')">
+                                    <label class="cursor" for="smoking">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Smoking</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Smoking</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Smoking</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="drug-use" [checked]="contentAdvisory.indexOf('Drug use') != -1" (click)="addContentAdvisory('Drug use')">
+                                    <label class="cursor" for="drug-use">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Drug use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Drug use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Drug use</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="violence" [checked]="contentAdvisory.indexOf('Violence') != -1" (click)="addContentAdvisory('Violence')">
+                                    <label class="cursor" for="violence">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Violence</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Violence</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Violence</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="substance-use" [checked]="contentAdvisory.indexOf('Substance use') != -1" (click)="addContentAdvisory('Substance use')">
+                                    <label class="cursor" for="substance-use">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Substance use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Substance use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Substance use</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="alcohol-use" [checked]="contentAdvisory.indexOf('Alcohol use') != -1" (click)="addContentAdvisory('Alcohol use')">
+                                    <label class="cursor" for="alcohol-use">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Alcohol use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Alcohol use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Alcohol use</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="foul-language" [checked]="contentAdvisory.indexOf('Foul language') != -1" (click)="addContentAdvisory('Foul language')">
+                                    <label class="cursor" for="foul-language">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Foul language</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Foul language</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Foul language</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="sexual-content" [checked]="contentAdvisory.indexOf('Sexual content') != -1" (click)="addContentAdvisory('Sexual content')">
+                                    <label class="cursor" for="sexual-content">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Sexual content</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Sexual content</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Sexual content</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="suitable-all-age" [checked]="contentAdvisory.indexOf('Suitable for all ages') != -1" (click)="addContentAdvisory('Suitable for all ages')">
+                                    <label class="cursor" for="suitable-all-age">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Suitable for all ages</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Suitable for all ages</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Suitable for all ages</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="appropriate-for-age7" [checked]="contentAdvisory.indexOf('Appropriate for age 7 and above') != -1" (click)="addContentAdvisory('Appropriate for age 7 and above')">
+                                    <label class="cursor" for="appropriate-for-age7">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Appropriate for age 7 and above</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Appropriate for age 7 and above</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Appropriate for age 7 and above</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reg-submit-btn">
+                            <button type="button" class="common-button" (click)="genreInformationBack()"><i-feather class="feather-icon icon-wid-lg mr-2" name="chevron-left"></i-feather> <span class="mr-3">Back</span></button>
+                            <button type="submit" class="common-button" (click)="genreInformationSubmit()" [disabled]="castCrewLoading">
+                                <svg *ngIf="castCrewLoading" [ngClass]="{'loader-icon mr-2': castCrewLoading}" aria-hidden="true" width="20" height="20" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg>
+                                <span class="ml-2">Next</span> <i-feather class="feather-icon icon-wid-lg ml-2" name="chevron-right"></i-feather>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="add-details-section" *ngIf="uploadInformation">
+                    <h4>4. Movie Uploads</h4>
+                        <label class="fs-ls">Running Hours</label>
+                        <div class="group-row">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="number" 
+                                        min="0" 
+                                        class="form-control" 
+                                        (ngModelChange)="runningHrChange($event)" 
+                                        placeholder="2" 
+                                        [(ngModel)]="runningHour"
+                                        [ngClass]="{'textfield-error': isRunningHourFilled}"
+                                    >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">hr</span>
+                                    </div>
+                                </div>
+                                <p class="form-invalid-error" *ngIf="isRunningHourFilled">Please enter running hr</p>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="number"
+                                        min="0"
+                                        class="form-control"
+                                        (ngModelChange)="runningMinChange($event)"
+                                        placeholder="30"
+                                        [(ngModel)]="runningMinute"
+                                        [ngClass]="{'textfield-error': isRunningMinuteFilled}"
+                                    >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">mins</span>
+                                    </div>
+                                </div>
+                                <p class="form-invalid-error" *ngIf="isRunningMinuteFilled">Please enter running min</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <label class="fs-ls mb-0">Upload Movie</label>
+                                <button class="common-button delete-border-btn border-btn fs-ls" *ngIf="deleteVideoButton" (click)="deleteVideo(movieId)">Delete Movie</button>
+                            </div>
+                            <div class="file-upload">
+                                <div class="image-up" *ngIf="!movieUploading && movieUrl == ''">
+                                    <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                    <input type="file" class="file-input" placeholder="Upload Video" (change)="onVideoPicked($event)">
+                                    <h5 class="mt-4">Upload Movie Here</h5>
+                                </div>
+                                <div class="file-circle-progress" *ngIf="movieUploading">
+                                    <span class="prgress-close cursor">
+                                        <i-feather class="feather-icon icon-wid-md" name="x"></i-feather>
+                                    </span>
+                                    <circle-progress [percent]="movieUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="80" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                    <h5 class="mt-4">Uploading...</h5>
+                                </div>
+                                <div class="video-preview" *ngIf="movieUrl != ''">
+                                    <video width="100%" height="100%" controls>
+                                        <source src="{{movieUrl}}">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-ls">Upload Audio</label>
+                            <div class="upload-bgbox">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="upload-card-left">
+                                            <label class="fs-ls">Select Language</label>
+                                            <div class="input-icon-box">
+                                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                                                <select class="form-control" (change)="setAudioLang($event)">
+                                                    <option *ngIf="audioLangArray.indexOf('English') === -1">English</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Tamil') === -1">Tamil</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Hindi') === -1">Hindi</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Malayalam') === -1">Malayalam</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Kannadam') === -1">Kannadam</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Korean') === -1">Korean</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Chinese') === -1">Chinese</option>
+                                                </select>
+                                                <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                                            </div>
+                                            <div class="pos-rel pt-4">
+                                                <div class="image-up" *ngIf="!audioUploading">
+                                                    <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                                    <input type="file" class="file-input" (change)="onAudioPicked($event)">
+                                                    <h5 class="mt-4">Upload Audio Here</h5>
+                                                </div>
+                                                <div class="file-circle-progress" *ngIf="audioUploading">
+                                                    <circle-progress [percent]="audioUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="60" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                                    <h5 class="mt-4">Uploading...</h5>
+                                                </div>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12                                                                                                                                            ">
+                                        <div class="common-scroll upload-info-value res-mt-2">
+                                            <div class="form-control upload-form-control p-0 mb-2" *ngFor="let audio of audioArray">
+                                                <div class="d-lg-flex align-items-center input-icon-box upload-icon-box">
+                                                    <div class="choose-file-left">
+                                                        <svg class="input-icon fill-m-color" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H5V6h14v12zM7 15h3c.55 0 1-.45 1-1v-1H9.5v.5h-2v-3h2v.5H11v-1c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm7 0h3c.55 0 1-.45 1-1v-1h-1.5v.5h-2v-3h2v.5H18v-1c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1z"/></svg>
+                                                        <span class="choose-click dark-text desc-ellipsize-l1">{{audio.audio_file_name}}</span>
+                                                    </div>
+                                                    <a placement="bottom" ngbTooltip="Delete" class="res-as-delte">
+                                                        <i-feather class="feather-icon icon-cancel icon-wid-lg cursor" name="trash" (click)="deleteAudio(audio.audio_id, audio.audio_lang)"></i-feather>
+                                                    </a>
+                                                    <div class="choose-file-right">
+                                                        <div class="filter-flex">
+                                                            <div class="filter-select cursor-default pr-3">
+                                                                <svg class="mr-3 icon-color" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                                                                <span>{{audio.audio_lang}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-ls">Upload Subtitle</label>
+                            <div class="upload-bgbox">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="upload-card-left">
+                                            <label class="fs-ls">Select Language</label>
+                                            <div class="input-icon-box">
+                                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                                                <select class="form-control" (change)="setSubtitleLang($event)">
+                                                    <option *ngIf="subtitleLangArray.indexOf('English') === -1">English</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Tamil') === -1">Tamil</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Hindi') === -1">Hindi</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Malayalam') === -1">Malayalam</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Kannadam') === -1">Kannadam</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Korean') === -1">Korean</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Chinese') === -1">Chinese</option>
+                                                </select>
+                                                <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                                            </div>
+                                            <div class="pos-rel pt-4">
+                                                <div class="image-up" *ngIf="!subtitleUploading">
+                                                    <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                                    <input type="file" class="file-input" (change)="onSubtitlePicked($event)">
+                                                    <h5 class="mt-4">Upload Subtitle Here</h5>
+                                                </div>
+                                                <div class="file-circle-progress" *ngIf="subtitleUploading">
+                                                    <circle-progress [percent]="subtitleUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="60" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                                    <h5 class="mt-4">Uploading...</h5>
+                                                </div>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12                                                                                                                                            ">
+                                        <div class="common-scroll upload-info-value res-mt-2">
+                                            <div class="form-control upload-form-control p-0 mb-2" *ngFor="let subtitle of subtitleArray">
+                                                <div class="d-lg-flex align-items-center input-icon-box upload-icon-box">
+                                                    <div class="choose-file-left">
+                                                        <svg class="input-icon fill-m-color" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H5V6h14v12zM7 15h3c.55 0 1-.45 1-1v-1H9.5v.5h-2v-3h2v.5H11v-1c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm7 0h3c.55 0 1-.45 1-1v-1h-1.5v.5h-2v-3h2v.5H18v-1c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1z"/></svg>
+                                                        <span class="choose-click dark-text desc-ellipsize-l1">{{subtitle.subtitle_file_name}}</span>
+                                                    </div>
+                                                    <a placement="bottom" ngbTooltip="Delete" class="res-as-delte">
+                                                        <i-feather class="feather-icon icon-cancel icon-wid-lg cursor" name="trash" (click)="deleteSubtitle(subtitle.subtitle_id, subtitle.subtitle_lang)"></i-feather>
+                                                    </a>
+                                                    <div class="choose-file-right">
+                                                        <div class="filter-flex">
+                                                            <div class="filter-select cursor-default pr-3">
+                                                                <svg class="mr-3 icon-color" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                                                                <span>{{subtitle.subtitle_lang}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group">
+                            <div class="common-checkobx">
+                                <input type="checkbox" id="schedule-date">
+                                <label for="schedule-date" class="checkbox-label cursor fs-ls">Schedule your movie release date</label>
+                                <div class="schedule-group">
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <label class="fs-ls">Schedule Date</label>
+                                                <div class="input-icon-box common-calendar">
+                                                    <i-feather class="feather-icon input-icon right-align icon-wid-lg cursor" name="calendar" (click)="date.toggle()"></i-feather>
+                                                    <input type="text" class="form-control pl-3 cursor" placeholder="yyyy-mm-dd" ngbDatepicker #date="ngbDatepicker" (click)="date.toggle()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <label class="fs-ls">Schedule Time</label>
+                                                <div class="input-icon-box">
+                                                    <i-feather name="clock" class="feather-icon input-icon right-align icon-wid-lg"></i-feather>
+                                                    <input type="text" placeholder="HH:MM" class="form-control pl-3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="form-group mb-4">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <label class="fs-ls mb-0">Upload Trailer</label>
+                                <button class="common-button delete-border-btn border-btn fs-ls" *ngIf="deleteTrailerButton" (click)="deleteTrailer(movieId)">Delete Trailer</button>
+                            </div>
+                            <div class="file-upload">
+                                <div class="image-up" *ngIf="!trailerUploading && trailerUrl == ''">
+                                    <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                    <input type="file" class="file-input" placeholder="Upload Trailer" (change)="onTrailerPicked($event)">
+                                    <h5 class="mt-4">Upload Trailer Here</h5>
+                                </div>
+                                <div class="file-circle-progress" *ngIf="trailerUploading">
+                                    <span class="prgress-close cursor">
+                                        <i-feather class="feather-icon icon-wid-md" name="x"></i-feather>
+                                    </span>
+                                    <circle-progress [percent]="trailerUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="80" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                    <h5 class="mt-4">Uploading...</h5>
+                                </div>
+                                <div class="video-preview" *ngIf="trailerUrl != ''">
+                                    <video width="100%" height="100%" controls>
+                                        <source src="{{trailerUrl}}">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reg-submit-btn">
+                            <button type="submit" class="common-button" (click)="uploadInformationBack()"><i-feather class="feather-icon icon-wid-lg mr-2" name="chevron-left"></i-feather> <span class="mr-3">Back</span></button>
+                            <button type="submit" class="common-button" (click)="submitForm()" [disabled]="formsubmitted">
+                                <svg *ngIf="formLoading" [ngClass]="{'loader-icon mr-2': formLoading}" aria-hidden="true" width="20" height="20" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg>
+                                Submit
+                            </button>
+                        </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-6 col-12">
+                <div class="add-information-sidebar">
+                    <ul class="pl-0">
+                        <li class="add-detail-list-col" [ngClass]="{'active': basicInformation === true}">
+                            <span class="add-detail-icon"><i-feather class="feather-icon icon-wid-lg" name="check-circle"></i-feather></span>
+                            <div class="add-detail-list-info">
+                                <h5>Movie Basic Information</h5>
+                                <p class="fs-ls">Fill your Movie Name, Release Date, Language, Description and Posters</p>
+                            </div>
+                        </li>
+                        <li class="add-detail-list-col" [ngClass]="{'active': genreInformation === true}">
+                            <span class="add-detail-icon"><i-feather class="feather-icon icon-wid-lg" name="check-circle"></i-feather></span>
+                            <div class="add-detail-list-info">
+                                <h5>Movie Cast & Crew  Information</h5>
+                                <p class="fs-ls">Fill your Starring, Supporting Actors, Directors, Producers, Certificate, Genre's and Content Advisory</p>
+                            </div>
+                        </li>
+                        <li class="add-detail-list-col" [ngClass]="{'active': uploadInformation === true}">
+                            <span class="add-detail-icon"><i-feather class="feather-icon icon-wid-lg" name="check-circle"></i-feather></span>
+                            <div class="add-detail-list-info">
+                                <h5>Movie Uploads</h5>
+                                <p class="fs-ls">Upload your Movie, Audio, Subtitle and set a prime time for it</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="text-center">
+                        <img src="assets/images/add-sidebar-image.png" alt="Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

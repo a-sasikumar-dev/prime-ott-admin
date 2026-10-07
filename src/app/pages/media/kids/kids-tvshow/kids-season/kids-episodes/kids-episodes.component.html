@@ -1,0 +1,57 @@
+<div class="pages-body">
+    <h2 class="page-title">Episodes</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/dashboard"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center">Kids</li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/kids/tvshows">TV Shows</a></li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/kids/tvshows/season" [queryParams]="{tvId: tvshowId, tvshowName: tvshowName}">Season</a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">Episodes</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="common-subtitle mt-3">
+            <h3>{{tvshowName}}</h3>
+            <h6 class="text-secondary mb-0">{{seasonName}}</h6>
+        </div>
+        <div class="row">
+            <div class="col-list-lg col-lg-4 col-md-6 col-sm-6 col-12 mt-4">
+                <a routerLink="update-episode" [queryParams]="{eId: newEpisodeId, sId: seasonId, tvId: tvshowId, tvshowName: tvshowName, seasonName: seasonName}">
+                    <div class="grid-list-add-card">
+                        <div class="add-content-icon">
+                            <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                            <h4 class="mt-3 mb-0">Add Episode</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div *ngFor="let episodes of episodes" class="col-list-lg col-lg-4 col-md-6 col-sm-6 col-12 mt-4">
+                <div class="grid-list-card">
+                    <div class="grid-list-card-image">
+                        <img src="{{episodes.cover}}" alt="Image">
+                        <!-- <span class="badge badge-genre">Game-show</span> -->
+                    </div>
+                    <div class="grid-list-card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fs-lss">Episode {{episodes.episode_number}}</span>
+                            <span class="re-language fs-lss">{{episodes.certificate}}</span>
+                        </div>
+                        <h5 class="desc-ellipsize-l1">{{episodes.episode_name}}</h5>
+                        <p class="desc-ellipsize-l3 list-card-desc">{{episodes.description}}</p>
+                        <div class="d-flex justify-content-between">
+                            <a placement="bottom" ngbTooltip="View" routerLink="view-episode" [queryParams]="{eId: episodes.episode_id, sId: episodes.season_id, tvId: episodes.tvshow_id, tvshowName: tvshowName, seasonName: seasonName}">
+                                <i-feather class="feather-icon icon-m-color icon-wid-md" name="eye"></i-feather>
+                            </a>
+                            <a placement="bottom" ngbTooltip="Edit" routerLink="update-episode" [queryParams]="{eId: episodes.episode_id, sId: episodes.season_id, tvId: episodes.tvshow_id, tvshowName: tvshowName, seasonName: seasonName}">
+                                <i-feather class="feather-icon icon-m-color icon-wid-md" name="edit"></i-feather>
+                            </a>
+                            <a placement="bottom" ngbTooltip="Delete" (click)="deleteEpisode(episodes.episode_id, episodes.season_id, episodes.tvshow_id)">
+                                <i-feather class="feather-icon icon-cancel icon-wid-md" name="trash"></i-feather>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

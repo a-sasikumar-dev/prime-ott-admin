@@ -1,0 +1,155 @@
+<div class="pages-body">
+    <h2 class="page-title">View Movie</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/dashboard"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/movies">Movies</a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">View Movie</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="view-card-row">
+            <div class="view-card-image">
+                <img src="{{movieImage}}" alt="Image">
+                <div class="video-play-btn">
+                    <a class="video-play-ripple" (click)="openVideoModal(videoModal)">
+                        <i-feather class="feather-icon fill-m-color icon-m-color" name="play"></i-feather>
+                    </a>
+                </div>
+                <!-- Video Modal Popup -->
+                <ng-template #videoModal let-modal>
+                    <div class="video-modal">
+                        <span class="close-modal">
+                            <i-feather class="feather-icon cursor" name="x" (click)="modal.dismiss('Cross click')"></i-feather>
+                        </span>
+                        <div class="modal-body">
+                            <video width="100%" height="100%" controls>
+                                <source src="{{movieUrl}}">
+                            </video>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="view-card-information">
+                <h2 class="view-title mb-3">{{movieName}}</h2>
+                <div class="d-sm-flex mb-3">
+                    <p class="d-flex align-items-center text-heading mb-0">{{movieRunningTime}} - {{releasedyear | date:'mediumDate'}} <span class="subtitle-icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#304edb"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H5V6h14v12zM7 15h3c.55 0 1-.45 1-1v-1H9.5v.5h-2v-3h2v.5H11v-1c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm7 0h3c.55 0 1-.45 1-1v-1h-1.5v.5h-2v-3h2v.5H18v-1c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1z"/></svg> <span class="pl-1">{{movieLanguage}}</span></span>
+                        <span class="certificate">{{certificate}}</span>
+                    </p>
+                    <div class="trailer-btn" *ngIf="trailerButton">
+                        <button class="common-button border-btn fs-ls" (click)="openTrailerModal(trailerModal)"><i-feather class="feather-icon fill-m-color icon-wid-sm mr-2" name="play"></i-feather> Play Trailer</button>
+                    </div>
+                    <!-- Trailer Modal Popup -->
+                    <ng-template #trailerModal let-modal>
+                        <div class="video-modal">
+                            <span class="close-modal">
+                                <i-feather class="feather-icon cursor" name="x" (click)="modal.dismiss('Cross click')"></i-feather>
+                            </span>
+                            <div class="modal-body">
+                                <video width="100%" height="100%" controls>
+                                    <source src="{{trailerUrl}}">
+                                </video>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+                <p class="fs-ls text-heading">{{movieDescription}}</p>
+            </div>
+        </div>
+        <div class="detail-section">
+            <div class="text-center">
+                <h5 class="det-title">Details</h5>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/director.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Directors</h5>
+                            <p class="fs-ls">{{directors}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/categories.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Genres</h5>
+                            <p class="fs-ls">{{genres}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/sound.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Audio Languages</h5>
+                            <p class="fs-ls">{{audioLang}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/starring.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Starring</h5>
+                            <p class="fs-ls">{{starring}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/supporting-actors.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Supporting Actors</h5>
+                            <p class="fs-ls">{{supportingActors}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/producer.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Producers</h5>
+                            <p class="fs-ls">{{producers}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/subtitles.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Subtitles</h5>
+                            <p class="fs-ls">{{subtitleLang}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/content-advice.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Content Advisory</h5>
+                            <p class="fs-ls">{{contentAdvisory}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

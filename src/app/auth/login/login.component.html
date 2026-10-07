@@ -1,0 +1,53 @@
+<div class="d-flex align-items-center justify-content-center login">
+    <div class="col-xl-4 col-lg-8 col-md-8 col-sm-8">
+        <div class="login_box_card">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Welcome Back !</h5>
+                    <p class="fs-lss">Sign in to Continue to Prime OTT</p>
+                    <div class="logo mt-2">
+                        <img src="assets/images/logo.png" alt="Logo">
+                    </div>
+                </div>
+                <div class="card-body mt-3">
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                            <label class="form-label" for="email">E-mail</label>
+                            <input 
+                                type="email" 
+                                class="form-control"
+                                id="email" 
+                                placeholder="email"
+                                formControlName="email"
+                                [ngClass]="{'textfield-error': submitted && loginForm.controls.email.invalid}"
+                            >
+                            <p class="form-invalid-error" *ngIf="loginForm.controls.email.invalid && submitted">Please enter email</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="password">Password</label>
+                            <input 
+                                id="password"  
+                                type="password" 
+                                class="form-control" 
+                                placeholder="*******"
+                                formControlName="password"
+                                [ngClass]="{'textfield-error': submitted && loginForm.controls.password.invalid}"
+                            >
+                            <p class="form-invalid-error" *ngIf="loginForm.controls.password.invalid && submitted">Please enter password</p>
+                        </div>
+                        <div class="form-group">
+                            <div class="com_button d-block">
+                                <button type="submit" class="d-flex align-items-center justify-content-center w-100">
+                                    <svg *ngIf="isLoading" [ngClass]="{'loader-icon mr-2': isLoading}" aria-hidden="true" width="20" height="20" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg> Log in
+                                </button>
+                            </div> 
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

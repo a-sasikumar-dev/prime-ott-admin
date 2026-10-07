@@ -1,0 +1,135 @@
+<div class="pages-body">
+    <h2 class="page-title">View Season</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/dashboard"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center">Kids</li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/kids/tvshows">TV Shows</a></li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/kids/tvshows/season" [queryParams]="{tvId: tvshowId, tvshowName: tvshowName}">Season</a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">View Season</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="common-subtitle mt-3">
+            <h3 class="mb-0">{{tvshowName}}</h3>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-lg-8 col-md-8 col-sm-12 col-12 mt-4">
+                <div class="view-card-box-2">
+                    <div class="view-card-box-image">
+                        <img src="{{seasonImage}}" alt="Image">
+                    </div>
+                    <div class="view-card-box-body">
+                        <h2 class="view-title mb-3 text-white">{{seasonName}}</h2>
+                        <div class="d-sm-flex mb-3">
+                            <p class="d-flex align-items-center text-white mb-0">{{totalEpisodesCount}} Episodes - {{releasedDate | date:'mediumDate'}}
+                                <span class="certificate">{{seasonCertificate}}</span>
+                            </p>
+                            <div class="trailer-btn" *ngIf="trailerButton">
+                                <button class="common-button border-btn text-white white-border-btn fs-ls" (click)="openTrailerModal(trailerModal)"><i-feather class="feather-icon fill-w-color icon-wid-sm mr-2" name="play"></i-feather> Play Trailer</button>
+                            </div>
+                            <!-- Trailer Modal Popup -->
+                            <ng-template #trailerModal let-modal>
+                                <div class="video-modal">
+                                    <span class="close-modal">
+                                        <i-feather class="feather-icon cursor" name="x" (click)="modal.dismiss('Cross click')"></i-feather>
+                                    </span>
+                                    <div class="modal-body">
+                                        <video width="100%" height="100%" controls>
+                                            <source src="{{trailerUrl}}">
+                                        </video>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                        <p class="fs-ls text-white">{{seasonDescription}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-4 col-md-4 col-sm-12 col-12">
+                <div class="season-listing-row common-scroll">
+                    <h5 class="det-title mb-0">Episodes</h5>
+                    <div class="row">
+                        <div *ngFor="let allEpisode of allEpisodes" class="card-xl-6 col-xl-4 col-lg-12 col-md-12 col-sm-6 col-12 mt-4">
+                            <div class="grid-list-card grid-list-card-t3 with-shadow">
+                                <div class="grid-list-card-image">
+                                    <img src="{{allEpisode.cover}}" alt="Image">
+                                </div>
+                                <div class="grid-list-card-body">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="fs-lss">Episode {{allEpisode.episode_number}}</span>
+                                        <span class="re-language fs-lss">{{allEpisode.certificate}}</span>
+                                    </div>
+                                    <h5 class="desc-ellipsize-l1">{{allEpisode.episode_name}}</h5>
+                                    <p class="desc-ellipsize-l3 list-card-desc">{{allEpisode.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="detail-section">
+            <div class="text-center">
+                <h5 class="det-title">Details</h5>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/director.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Directors</h5>
+                            <p class="fs-ls">{{directors}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/starring.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Starring</h5>
+                            <p class="fs-ls">{{starring}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/supporting-actors.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Supporting Actors</h5>
+                            <p class="fs-ls">{{supportingActors}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/producer.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Producers</h5>
+                            <p class="fs-ls">{{producers}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/content-advice.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Content Advisory</h5>
+                            <p class="fs-ls">{{contentAdvisory}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

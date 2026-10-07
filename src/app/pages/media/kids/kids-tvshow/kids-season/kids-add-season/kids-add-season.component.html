@@ -1,0 +1,433 @@
+
+<div class="pages-body">
+    <h2 class="page-title">Add Season</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/dashboard"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center">Kids</li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/kids/tvshows">TV Shows</a></li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/kids/tvshows/season" [queryParams]="{tvId: tvshowId, tvshowName: tvshowName}">Season</a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">Add Season</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7 col-md-6 col-sm-6 col-12">
+                <div class="add-details-section" *ngIf="basicInformation">
+                    <h4>1. Season Basic Information</h4>
+                    <form class="mt-4" [formGroup]="SeasonBasicInfo" (ngSubmit)="basicInformationSubmit()">
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Season Number</label>
+                                    <input 
+                                        type="number"
+                                        min="1" 
+                                        class="form-control" 
+                                        placeholder="Season Number"
+                                        formControlName="seasonNumber"
+                                        [ngClass]="{'textfield-error': basicInfosubmitted && SeasonBasicInfo.controls.seasonNumber.invalid}"
+                                    >
+                                    <p class="form-invalid-error" *ngIf="SeasonBasicInfo.controls.seasonNumber.invalid && basicInfosubmitted">Please enter season number</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Season Name</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="Season Name"
+                                        formControlName="seasonName"
+                                        [ngClass]="{'textfield-error': basicInfosubmitted && SeasonBasicInfo.controls.seasonName.invalid}"
+                                    >
+                                    <p class="form-invalid-error" *ngIf="SeasonBasicInfo.controls.seasonName.invalid && basicInfosubmitted">Please enter season name</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Release Date</label>
+                                    <div class="input-icon-box common-calendar">
+                                        <i-feather class="feather-icon input-icon right-align icon-wid-lg cursor" name="calendar" (click)="date.toggle()"></i-feather>
+                                        <input 
+                                            type="text" 
+                                            class="form-control pl-3 cursor" 
+                                            placeholder="yyyy-mm-dd" 
+                                            formControlName="releasedDate"
+                                            ngbDatepicker #date="ngbDatepicker" (click)="date.toggle()"
+                                            [(ngModel)]="releasedDate"
+                                            [ngClass]="{'textfield-error': basicInfosubmitted && SeasonBasicInfo.controls.releasedDate.invalid}"
+                                        >
+                                        <p class="form-invalid-error" *ngIf="SeasonBasicInfo.controls.releasedDate.invalid && basicInfosubmitted">Please enter released date</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Description</label>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <textarea 
+                                                class="form-control pt-2" 
+                                                placeholder="Description"
+                                                rows="6"
+                                                formControlName="seasonDescription"
+                                                [ngClass]="{'textfield-error': basicInfosubmitted && SeasonBasicInfo.controls.seasonDescription.invalid}"
+                                            ></textarea>
+                                            <p class="form-invalid-error" *ngIf="SeasonBasicInfo.controls.seasonDescription.invalid && basicInfosubmitted">Please enter season description</p>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <h5 class="mb-3">Certificate</h5>
+                                <div class="form-group mb-4">
+                                    <div class="common-radio-button">
+                                        <div class="radio">
+                                            <input type="radio" id="U" formControlName="certificate" value="U">
+                                            <label for="U" class="radio-label">U</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" id="A" formControlName="certificate" value="A">
+                                            <label for="A" class="radio-label">A</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" id="U/A" formControlName="certificate" value="U/A">
+                                            <label for="U/A" class="radio-label">U/A</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" id="U/A-7+" formControlName="certificate" value="U/A-7+">
+                                            <label for="U/A-7+" class="radio-label">U/A-7+</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" id="U/A-13+" formControlName="certificate" value="U/A-13+">
+                                            <label for="U/A-13+" class="radio-label">U/A-13+</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" id="U/A-16+" formControlName="certificate" value="U/A-16+">
+                                            <label for="U/A-16+" class="radio-label">U/A-16+</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-img-xl-land col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <div class="file-upload">
+                                        <div class="image-up" *ngIf="!portraitUploading && portraitImageUrl == ''">
+                                            <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                            <input type="file" class="file-input" placeholder="Upload Image" (change)="onPortraitPicked($event)">
+                                            <h5 class="mt-4">Upload Portrait Image</h5>
+                                            <p class="fs-lss mt-3">(720x1080)</p>
+                                        </div>
+                                        <div class="file-circle-progress" *ngIf="portraitUploading">
+                                            <circle-progress [percent]="portraitUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="60" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                            <h5 class="mt-4">Uploading...</h5>
+                                        </div>
+                                        <div class="img-preview" *ngIf="portraitImageUrl != ''">
+                                            <img class="img-wh-full" src="{{portraitImageUrl}}" alt="Image">
+                                            <button type="button" class="close-btn" (click)="portraitClose()">
+                                                <i-feather class="feather-icon icon-cancel icon-wid-lg" name="x"></i-feather>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-img-xl-cover col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group mb-4">
+                                    <div class="file-upload">
+                                        <div class="image-up" *ngIf="!coverUploading && coverImageUrl == ''">
+                                            <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                            <input type="file" class="file-input" placeholder="Upload Image" (change)="onCoverPicked($event)">
+                                            <h5 class="mt-4">Upload Cover Image</h5>
+                                            <p class="fs-lss mt-3">(1080x720)</p>
+                                        </div>
+                                        <div class="file-circle-progress" *ngIf="coverUploading">
+                                            <circle-progress [percent]="coverUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="60" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                            <h5 class="mt-4">Uploading...</h5>
+                                        </div>
+                                        <div class="img-preview" *ngIf="coverImageUrl != ''">
+                                            <img class="img-wh-full" src="{{coverImageUrl}}" alt="Image">
+                                            <button type="button" class="close-btn" (click)="coverClose()">
+                                                <i-feather class="feather-icon icon-cancel icon-wid-lg" name="x"></i-feather>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reg-submit-btn">
+                            <button type="submit" class="common-button" [disabled]="basicInfoLoading">
+                                <svg *ngIf="basicInfoLoading" [ngClass]="{'loader-icon mr-2': basicInfoLoading}" aria-hidden="true" width="20" height="20" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg>
+                                <span class="ml-2">Next</span> <i-feather class="feather-icon icon-wid-lg ml-2" name="chevron-right"></i-feather>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="add-details-section" *ngIf="castCrewInformation">
+                    <h4>2. Season Casting & Crew</h4>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label class="fs-ls">Starring</label>
+                                <a placement="right" ngbTooltip="Type and Enter to add Starring">
+                                    <i class="info-icon"></i>
+                                </a>
+                                <tag-input class="tags-control" [(ngModel)]="starring" [modelAsStrings]="true" [placeholder]="'Add Starring'" [secondaryPlaceholder]="'Add Starring'" [editable]="true"
+                                [ngClass]="{'textfield-error': isActorsFilled}" (keydown.enter)="validateCastAndCrew()"></tag-input>
+                                <p class="form-invalid-error" *ngIf="isActorsFilled">Please enter starring</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label class="fs-ls">Supporting Actors</label>
+                                <a placement="right" ngbTooltip="Type and Enter to add Supporting Actors">
+                                    <i class="info-icon"></i>
+                                </a>
+                                <tag-input class="tags-control" [(ngModel)]="supportingActors" [modelAsStrings]="true" [placeholder]="'Add Supporting Actors'" [secondaryPlaceholder]="'Add Supporting Actors'" [editable]="true"
+                                [ngClass]="{'textfield-error': isSupportingActorsFilled}" (keydown.enter)="validateCastAndCrew()"></tag-input>
+                                <p class="form-invalid-error" *ngIf="isSupportingActorsFilled">Please enter supporting actors</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label class="fs-ls">Directors</label>
+                                <a placement="right" ngbTooltip="Type and Enter to add Directors">
+                                    <i class="info-icon"></i>
+                                </a>
+                                <tag-input class="tags-control" [(ngModel)]="directors" [modelAsStrings]="true" [placeholder]="'Add Directors'" [secondaryPlaceholder]="'Add Directors'" [editable]="true"
+                                [ngClass]="{'textfield-error': isDirectorsFilled}" (keydown.enter)="validateCastAndCrew()"></tag-input>
+                                <p class="form-invalid-error" *ngIf="isDirectorsFilled">Please enter directors</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label class="fs-ls">Producers</label>
+                                <a placement="right" ngbTooltip="Type and Enter to add Producers">
+                                    <i class="info-icon"></i>
+                                </a>
+                                <tag-input class="tags-control" [(ngModel)]="producers" [modelAsStrings]="true" [placeholder]="'Add Producers'" [secondaryPlaceholder]="'Add Producers'" [editable]="true"
+                                [ngClass]="{'textfield-error': isProducersFilled}" (keydown.enter)="validateCastAndCrew()"></tag-input>
+                                <p class="form-invalid-error" *ngIf="isProducersFilled">Please enter producers</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="mt-4">
+                        <h5 class="mb-3">Content Advisory</h5>
+                        <p class="form-invalid-error" *ngIf="isContentAdvisoryFilled">Please select atleast one content advisory</p>
+                        <div class="form-group mb-4">
+                            <div class="select-checkbox-row">
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="smoking" [checked]="contentAdvisory.indexOf('Smoking') != -1" (click)="addContentAdvisory('Smoking')">
+                                    <label class="cursor" for="smoking">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Smoking</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Smoking</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Smoking</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="drug-use" [checked]="contentAdvisory.indexOf('Drug use') != -1" (click)="addContentAdvisory('Drug use')">
+                                    <label class="cursor" for="drug-use">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Drug use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Drug use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Drug use</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="violence" [checked]="contentAdvisory.indexOf('Violence') != -1" (click)="addContentAdvisory('Violence')">
+                                    <label class="cursor" for="violence">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Violence</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Violence</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Violence</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="substance-use" [checked]="contentAdvisory.indexOf('Substance use') != -1" (click)="addContentAdvisory('Substance use')">
+                                    <label class="cursor" for="substance-use">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Substance use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Substance use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Substance use</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="alcohol-use" [checked]="contentAdvisory.indexOf('Alcohol use') != -1" (click)="addContentAdvisory('Alcohol use')">
+                                    <label class="cursor" for="alcohol-use">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Alcohol use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Alcohol use</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Alcohol use</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="foul-language" [checked]="contentAdvisory.indexOf('Foul language') != -1" (click)="addContentAdvisory('Foul language')">
+                                    <label class="cursor" for="foul-language">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Foul language</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Foul language</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Foul language</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="sexual-content" [checked]="contentAdvisory.indexOf('Sexual content') != -1" (click)="addContentAdvisory('Sexual content')">
+                                    <label class="cursor" for="sexual-content">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Sexual content</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Sexual content</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Sexual content</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="suitable-all-age" [checked]="contentAdvisory.indexOf('Suitable for all ages') != -1" (click)="addContentAdvisory('Suitable for all ages')">
+                                    <label class="cursor" for="suitable-all-age">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Suitable for all ages</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Suitable for all ages</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Suitable for all ages</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="select-checkbox-col">
+                                    <input type="checkbox" class="btn-check" id="appropriate-for-age7" [checked]="contentAdvisory.indexOf('Appropriate for age 7 and above') != -1" (click)="addContentAdvisory('Appropriate for age 7 and above')">
+                                    <label class="cursor" for="appropriate-for-age7">
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox default">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="plus-circle"></i-feather></span>
+                                            <span class="pos-t1">Appropriate for age 7 and above</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox checked">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="check-circle"></i-feather></span>
+                                            <span class="pos-t1">Appropriate for age 7 and above</span>
+                                        </span>
+                                        <span class="common-button border-btn fs-ls lh-1 select-checkbox cancel">
+                                            <span><i-feather class="feather-icon icon-wid-md mr-2" name="x"></i-feather></span>
+                                            <span class="pos-t1">Appropriate for age 7 and above</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <label class="fs-ls mb-0">Upload Trailer</label>
+                                <button class="common-button delete-border-btn border-btn fs-ls" *ngIf="deleteTrailerButton" (click)="deleteTrailer(seasonId)">Delete Trailer</button>
+                            </div>
+                            <div class="file-upload">
+                                <div class="image-up" *ngIf="!trailerUploading && trailerUrl == ''">
+                                    <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                    <input type="file" class="file-input" placeholder="Upload Trailer" (change)="onTrailerPicked($event)">
+                                    <h5 class="mt-4">Upload Trailer Here</h5>
+                                </div>
+                                <div class="file-circle-progress" *ngIf="trailerUploading">
+                                    <span class="prgress-close cursor">
+                                        <i-feather class="feather-icon icon-wid-md" name="x"></i-feather>
+                                    </span>
+                                    <circle-progress [percent]="trailerUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="80" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                    <h5 class="mt-4">Uploading...</h5>
+                                </div>
+                                <div class="video-preview" *ngIf="trailerUrl != ''">
+                                    <video width="100%" height="100%" controls>
+                                        <source src="{{trailerUrl}}">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reg-submit-btn">
+                            <button type="submit" class="common-button" (click)="castCrewInformationBack()"><i-feather class="feather-icon icon-wid-lg mr-2" name="chevron-left"></i-feather> <span class="mr-3">Back</span></button>
+                            <button type="submit" class="common-button" (click)="castCrewInformationSubmit()" [disabled]="castCrewLoading">
+                                <svg *ngIf="castCrewLoading" [ngClass]="{'loader-icon mr-2': castCrewLoading}" aria-hidden="true" width="20" height="20" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg> Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-6 col-12">
+                <div class="add-information-sidebar">
+                    <ul class="pl-0">
+                        <li class="add-detail-list-col" [ngClass]="{'active': basicInformation === true}">
+                            <span class="add-detail-icon"><i-feather class="feather-icon icon-wid-lg" name="check-circle"></i-feather></span>
+                            <div class="add-detail-list-info">
+                                <h5>Season Basic Information</h5>
+                                <p class="fs-ls">Fill your Season Number, Season Name, Release Date, Description, Certificate and Posters</p>
+                            </div>
+                        </li>
+                        <li class="add-detail-list-col" [ngClass]="{'active': castCrewInformation === true}">
+                            <span class="add-detail-icon"><i-feather class="feather-icon icon-wid-lg" name="check-circle"></i-feather></span>
+                            <div class="add-detail-list-info">
+                                <h5>Season Cast & Crew Information</h5>
+                                <p class="fs-ls">Fill your Starring, Supporting Actors, Directors, Producers, Content Advisory and Trailer</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="text-center">
+                        <img src="assets/images/add-sidebar-image.png" alt="Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

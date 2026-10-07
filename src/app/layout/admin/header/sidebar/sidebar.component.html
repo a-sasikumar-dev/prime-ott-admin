@@ -1,0 +1,52 @@
+<div class="side_bar">
+  <nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href="#">
+        <img src="assets/images/logo.png" alt="logo">
+      </a>
+      <a class="navbar-toggler" data-toggle="collapse" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapsibleNavbar" aria-label="Toggle navigation">
+        <i-feather class="feather-icon toggle-menu-icon menu-open" name="menu"></i-feather>
+        <i-feather class="feather-icon toggle-menu-icon menu-close" name="x"></i-feather>
+      </a>
+      <div class="collapse navbar-collapse admin-navbar" id="collapsibleNavbar" [ngbCollapse]="isCollapsed">
+        <ul class="navbar-nav">
+          <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a class="nav-link" routerLink="/dashboard"><i-feather class="feather-icon" name="home"></i-feather><span class="menu_text">Dashboard</span></a>
+          </li>
+          <li class="nav-item nav-sub-drop" ngbDropdown [autoClose]="false">
+            <a class="nav-link" ngbDropdownToggle id="navbardrop"><i-feather class="feather-icon" name="plus-square"></i-feather><span class="menu_text">Media</span>
+              <span class="menu-arrow-res"><i-feather class="feather-icon" name="chevron-down"></i-feather></span></a>
+            <ul ngbDropdownMenu aria-labelledby="navbardrop">
+              <li class="nav-item" ngbDropdownItem routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="/media/movies"><i-feather class="feather-icon" name="video"></i-feather><span class="menu_text">Movies</span></a>
+              </li>
+              <li class="nav-item" ngbDropdownItem routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="/media/tvshows"><i-feather class="feather-icon" name="youtube"></i-feather><span class="menu_text">TV Shows</span></a>
+              </li>
+              <li class="nav-item nav-sub-child-drop" ngbDropdownItem ngbDropdown>
+                <a class="nav-link" ngbDropdownToggle id="navbardrop"><i-feather class="feather-icon" name="meh"></i-feather><span class="menu_text">kids</span>
+                  <span class="menu-arrow-res"><i-feather class="feather-icon" name="chevron-down"></i-feather></span>
+                </a>
+                <ul ngbDropdownMenu aria-labelledby="navbardrop">
+                  <li class="nav-item" ngbDropdownItem routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a class="nav-link" routerLink="/media/kids/movies"><i-feather class="feather-icon icon-wid-lg" name="video"></i-feather><span class="menu_text">Movies</span></a>
+                  </li>
+                  <li class="nav-item" ngbDropdownItem routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a class="nav-link" routerLink="/media/kids/tvshows"><i-feather class="feather-icon icon-wid-lg" name="tv"></i-feather><span class="menu_text">TV Shows</span></a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a class="nav-link" routerLink="/banners"><i-feather class="feather-icon" name="image"></i-feather><span class="menu_text">Banners</span></a>
+          </li>
+          <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a class="nav-link" routerLink="/customers"><i-feather class="feather-icon" name="users"></i-feather><span class="menu_text">Customers</span></a>
+          </li>    
+          <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a class="nav-link" routerLink="/subscription"><i-feather class="feather-icon" name="award"></i-feather><span class="menu_text">Subscription</span></a>
+          </li>   
+        </ul>
+      </div>  
+  </nav>
+</div>

@@ -1,0 +1,13 @@
+<div class="top-header">
+<div class="d-flex profile-right">
+  <div class="profile-list common-dropdown" ngbDropdown>
+    <div class="profile-slelect d-flex align-items-center cursor dark-text" ngbDropdownToggle id="profiledrop">
+      <span class="prfile-logo mr-2"><img [src]="imageUrl" class="profile_poto" alt="logo"></span> 
+      <span class="profile-name">Admin</span> <i-feather name="chevron-down" class="feather-icon icon-wid-sm select-arrow"></i-feather></div>
+    <ul ngbDropdownMenu aria-labelledby="profiledrop">
+      <li ngbDropdownItem class="profile-name-res">Admin</li>
+      <li ngbDropdownItem><a routerLink='/profile'> <i-feather name="user" class="feather-icon icon-wid-md"></i-feather> Profile</a></li>
+      <li ngbDropdownItem><a href="javascript:void(0)" (click)=logOut()> <i-feather name="log-out" class="feather-icon icon-wid-md"></i-feather> Log out</a></li>
+    </ul>
+  </div>
+</div>

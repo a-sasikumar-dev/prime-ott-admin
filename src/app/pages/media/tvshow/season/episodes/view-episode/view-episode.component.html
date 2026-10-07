@@ -1,0 +1,99 @@
+<div class="pages-body">
+    <h2 class="page-title">View Episode</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/dashboard"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/tvshows">TV Shows</a></li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/tvshows/season" [queryParams]="{tvId: tvshowId, tvshowName: tvshowName}">Season</a></li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/tvshows/season/episodes" [queryParams]="{sId: seasonId, tvId: tvshowId, tvshowName: tvshowName, seasonName: seasonName}">Episodes</a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">View Episode</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="common-subtitle mt-3">
+            <h3>{{tvshowName}}</h3>
+            <h6 class="text-secondary mb-0">{{seasonName}}</h6>
+        </div>
+        <div class="view-card-row mt-4">
+            <div class="view-card-image">
+                <img src="{{episodeImage}}" alt="Image">
+                <div class="video-play-btn">
+                    <a class="video-play-ripple" (click)="openVideoModal(videoModal)">
+                        <i-feather class="feather-icon fill-m-color icon-m-color" name="play"></i-feather>
+                    </a>
+                </div>
+                <!-- Video Modal Popup -->
+                <ng-template #videoModal let-modal>
+                    <div class="video-modal">
+                        <span class="close-modal">
+                            <i-feather class="feather-icon cursor" name="x" (click)="modal.dismiss('Cross click')"></i-feather>
+                        </span>
+                        <div class="modal-body">
+                            <video width="100%" height="100%" controls>
+                                <source src="{{episodeUrl}}">
+                            </video>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="view-card-information">
+                <h2 class="view-title mb-3">{{episodeName}}</h2>
+                <div class="d-sm-flex mb-3">
+                    <p class="d-flex align-items-center text-heading mb-0">Episode {{episodeNumber}} - {{episodeRunningTime}} - {{releasedDate | date:'mediumDate'}}
+                        <span class="certificate">{{episodeCertificate}}</span>
+                    </p>
+                </div>
+                <p class="fs-ls text-heading">{{episodeDescription}}</p>
+            </div>
+        </div>
+        <h5 class="det-title mt-4 mb-3">Episodes</h5>
+        <ngx-slick-carousel class="carousel common-carousel episode-carousel" #slickModal="slick-carousel" [config]="episodeSlideConfig">
+            <div ngxSlickItem class="slide" *ngFor="let allEpisode of allEpisodes">
+                <a href="/media/tvshows/season/episodes/view-episode?eId={{allEpisode.episode_id}}&sId={{seasonId}}&tvId={{tvshowId}}&tvshowName={{tvshowName}}&seasonName={{seasonName}}">
+                    <div class="grid-list-card grid-list-card-t3 with-shadow">
+                        <div class="grid-list-card-image">
+                            <img src="{{allEpisode.cover}}" alt="Image">
+                        </div>
+                        <div class="grid-list-card-body">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="fs-lss">Episode {{allEpisode.episode_number}}</span>
+                                <span class="re-language fs-lss">{{allEpisode.certificate}}</span>
+                            </div>
+                            <h5 class="desc-ellipsize-l1">{{allEpisode.episode_name}}</h5>
+                            <p class="desc-ellipsize-l3 list-card-desc">{{allEpisode.description}}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </ngx-slick-carousel>
+        <div class="detail-section">
+            <div class="text-center">
+                <h5 class="det-title">Details</h5>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/sound.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Audio Languages</h5>
+                            <p class="fs-ls">{{audioLang}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-list-xl col-lg-6 col-md-6 col-sm-6 col-12 mt-4">
+                    <div class="detail-card-row">
+                        <div class="detail-card-icon">
+                            <img src="assets/images/subtitles.png" alt="Image">
+                        </div>
+                        <div class="detail-card-information">
+                            <h5 class="detail-card-title">Subtitles</h5>
+                            <p class="fs-ls">{{subtitleLang}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

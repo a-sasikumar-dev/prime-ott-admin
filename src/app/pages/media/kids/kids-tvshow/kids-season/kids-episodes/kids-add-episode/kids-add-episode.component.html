@@ -1,0 +1,407 @@
+<div class="pages-body">
+    <h2 class="page-title">Add Episode</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item d-flex align-items-center"><a class="d-flex" routerLink="/dashboard"><i-feather class="feather-icon icon-wid-md" name="home"></i-feather></a></li>
+          <li class="breadcrumb-item d-flex align-items-center">Kids</li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/kids/tvshows">TV Shows</a></li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/kids/tvshows/season" [queryParams]="{tvId: tvshowId, tvshowName: tvshowName}">Season</a></li>
+          <li class="breadcrumb-item d-flex align-items-center"><a routerLink="/media/kids/tvshows/season/episodes" [queryParams]="{sId: seasonId, tvId: tvshowId, tvshowName: tvshowName, seasonName: seasonName}">Episodes</a></li>
+          <li class="breadcrumb-item d-flex align-items-center active" aria-current="page">Add Episode</li>
+        </ol>
+    </nav>
+    <div class="pages-information-body">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7 col-md-6 col-sm-6 col-12">
+                <div class="add-details-section" *ngIf="basicInformation">
+                    <h4>1. Episode Basic Information</h4>
+                    <form class="mt-4" [formGroup]="EpisodeBasicInfo">
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Episode Number</label>
+                                    <input 
+                                        type="number"
+                                        min="1" 
+                                        class="form-control" 
+                                        placeholder="Episode Number"
+                                        formControlName="episodeNumber"
+                                        [ngClass]="{'textfield-error': basicInfosubmitted && EpisodeBasicInfo.controls.episodeNumber.invalid}"
+                                    >
+                                    <p class="form-invalid-error" *ngIf="EpisodeBasicInfo.controls.episodeNumber.invalid && basicInfosubmitted">Please enter episode number</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Episode Name</label>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        placeholder="Episode Name"
+                                        formControlName="episodeName"
+                                        [ngClass]="{'textfield-error': basicInfosubmitted && EpisodeBasicInfo.controls.episodeName.invalid}"
+                                    >
+                                    <p class="form-invalid-error" *ngIf="EpisodeBasicInfo.controls.episodeName.invalid && basicInfosubmitted">Please enter episode name</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Release Date</label>
+                                    <div class="input-icon-box common-calendar">
+                                        <i-feather class="feather-icon input-icon right-align icon-wid-lg cursor" name="calendar" (click)="date.toggle()"></i-feather>
+                                        <input 
+                                            type="text" 
+                                            class="form-control pl-3 cursor" 
+                                            placeholder="yyyy-mm-dd" 
+                                            formControlName="releasedDate"
+                                            ngbDatepicker #date="ngbDatepicker" (click)="date.toggle()"
+                                            [(ngModel)]="releasedDate"
+                                            [ngClass]="{'textfield-error': basicInfosubmitted && EpisodeBasicInfo.controls.releasedDate.invalid}"
+                                        >
+                                        <p class="form-invalid-error" *ngIf="EpisodeBasicInfo.controls.releasedDate.invalid && basicInfosubmitted">Please enter released date</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="fs-ls">Description</label>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <textarea 
+                                                class="form-control pt-2" 
+                                                placeholder="Description"
+                                                rows="6"
+                                                formControlName="episodeDescription"
+                                                [ngClass]="{'textfield-error': basicInfosubmitted && EpisodeBasicInfo.controls.episodeDescription.invalid}"
+                                            ></textarea>
+                                            <p class="form-invalid-error" *ngIf="EpisodeBasicInfo.controls.episodeDescription.invalid && basicInfosubmitted">Please enter episode description</p>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <h5 class="mb-3">Certificate</h5>
+                    <div class="form-group mb-4">
+                        <div class="common-radio-button">
+                            <div class="radio">
+                                <input type="radio" id="U" name="certificate" value="U" [(ngModel)]="certificate">
+                                <label for="U" class="radio-label">U</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" id="A" name="certificate" value="A" [(ngModel)]="certificate">
+                                <label for="A" class="radio-label">A</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" id="U/A" name="certificate" value="U/A" [(ngModel)]="certificate">
+                                <label for="U/A" class="radio-label">U/A</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" id="U/A-7+" name="certificate" value="U/A-7+" [(ngModel)]="certificate">
+                                <label for="U/A-7+" class="radio-label">U/A-7+</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" id="U/A-13+" name="certificate" value="U/A-13+" [(ngModel)]="certificate">
+                                <label for="U/A-13+" class="radio-label">U/A-13+</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" id="U/A-16+" name="certificate" value="U/A-16+" [(ngModel)]="certificate">
+                                <label for="U/A-16+" class="radio-label">U/A-16+</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-img-xl-land col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group">
+                                <div class="file-upload">
+                                    <div class="image-up" *ngIf="!portraitUploading && portraitImageUrl == ''">
+                                        <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                        <input type="file" class="file-input" placeholder="Upload Image" (change)="onPortraitPicked($event)">
+                                        <h5 class="mt-4">Upload Portrait Image</h5>
+                                        <p class="fs-lss mt-3">(720x1080)</p>
+                                    </div>
+                                    <div class="file-circle-progress" *ngIf="portraitUploading">
+                                        <circle-progress [percent]="portraitUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="60" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                        <h5 class="mt-4">Uploading...</h5>
+                                    </div>
+                                    <div class="img-preview" *ngIf="portraitImageUrl != ''">
+                                        <img class="img-wh-full" src="{{portraitImageUrl}}" alt="Image">
+                                        <button type="button" class="close-btn" (click)="portraitClose()">
+                                            <i-feather class="feather-icon icon-cancel icon-wid-lg" name="x"></i-feather>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-img-xl-cover col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group mb-4">
+                                <div class="file-upload">
+                                    <div class="image-up" *ngIf="!coverUploading && coverImageUrl == ''">
+                                        <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                        <input type="file" class="file-input" placeholder="Upload Image" (change)="onCoverPicked($event)">
+                                        <h5 class="mt-4">Upload Cover Image</h5>
+                                        <p class="fs-lss mt-3">(1080x720)</p>
+                                    </div>
+                                    <div class="file-circle-progress" *ngIf="coverUploading">
+                                        <circle-progress [percent]="coverUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="60" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                        <h5 class="mt-4">Uploading...</h5>
+                                    </div>
+                                    <div class="img-preview" *ngIf="coverImageUrl != ''">
+                                        <img class="img-wh-full" src="{{coverImageUrl}}" alt="Image">
+                                        <button type="button" class="close-btn" (click)="coverClose()">
+                                            <i-feather class="feather-icon icon-cancel icon-wid-lg" name="x"></i-feather>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reg-submit-btn">
+                        <button type="submit" class="common-button" (click)="basicInformationSubmit()" [disabled]="basicInfoLoading">
+                            <svg *ngIf="basicInfoLoading" [ngClass]="{'loader-icon mr-2': basicInfoLoading}" aria-hidden="true" width="20" height="20" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg>
+                            <span class="ml-2">Next</span> <i-feather class="feather-icon icon-wid-lg ml-2" name="chevron-right"></i-feather></button>
+                    </div>
+                </div>
+                <div class="add-details-section" *ngIf="uploadInformation">
+                    <h4>2. Episode Uploads</h4>
+                        <label class="fs-ls">Running Hours</label>
+                        <div class="group-row">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="number" 
+                                        min="0" 
+                                        class="form-control" 
+                                        (ngModelChange)="runningHrChange($event)" 
+                                        placeholder="2" 
+                                        [(ngModel)]="runningHour"
+                                        [ngClass]="{'textfield-error': isRunningHourFilled}"
+                                    >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">hr</span>
+                                    </div>
+                                </div>
+                                <p class="form-invalid-error" *ngIf="isRunningHourFilled">Please enter running hr</p>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="number"
+                                        min="0"
+                                        class="form-control"
+                                        (ngModelChange)="runningMinChange($event)"
+                                        placeholder="30"
+                                        [(ngModel)]="runningMinute"
+                                        [ngClass]="{'textfield-error': isRunningMinuteFilled}"
+                                    >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">mins</span>
+                                    </div>
+                                </div>
+                                <p class="form-invalid-error" *ngIf="isRunningMinuteFilled">Please enter running min</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <label class="fs-ls mb-0">Upload Episode</label>
+                                <button class="common-button delete-border-btn border-btn fs-ls" *ngIf="deleteVideoButton" (click)="deleteVideo(episodeId)">Delete Episode</button>
+                            </div>
+                            <div class="file-upload">
+                                <div class="image-up" *ngIf="!episodeUploading && episodeUrl == ''">
+                                    <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                    <input type="file" class="file-input" placeholder="Upload Video" (change)="onVideoPicked($event)">
+                                    <h5 class="mt-4">Upload Episode Here</h5>
+                                </div>
+                                <div class="file-circle-progress" *ngIf="episodeUploading">
+                                    <span class="prgress-close cursor">
+                                        <i-feather class="feather-icon icon-wid-md" name="x"></i-feather>
+                                    </span>
+                                    <circle-progress [percent]="episodeUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="80" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                    <h5 class="mt-4">Uploading...</h5>
+                                </div>
+                                <div class="video-preview" *ngIf="episodeUrl != ''">
+                                    <video width="100%" height="100%" controls>
+                                        <source src="{{episodeUrl}}">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-ls">Upload Audio</label>
+                            <div class="upload-bgbox">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="upload-card-left">
+                                            <label class="fs-ls">Select Language</label>
+                                            <div class="input-icon-box">
+                                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                                                <select class="form-control" (change)="setAudioLang($event)">
+                                                    <option *ngIf="audioLangArray.indexOf('English') === -1">English</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Tamil') === -1">Tamil</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Hindi') === -1">Hindi</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Malayalam') === -1">Malayalam</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Kannadam') === -1">Kannadam</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Korean') === -1">Korean</option>
+                                                    <option *ngIf="audioLangArray.indexOf('Chinese') === -1">Chinese</option>
+                                                </select>
+                                                <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                                            </div>
+                                            <div class="pos-rel pt-4">
+                                                <div class="image-up" *ngIf="!audioUploading">
+                                                    <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                                    <input type="file" class="file-input" (change)="onAudioPicked($event)">
+                                                    <h5 class="mt-4">Upload Audio Here</h5>
+                                                </div>
+                                                <div class="file-circle-progress" *ngIf="audioUploading">
+                                                    <circle-progress [percent]="audioUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="60" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                                    <h5 class="mt-4">Uploading...</h5>
+                                                </div>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12                                                                                                                                            ">
+                                        <div class="common-scroll upload-info-value res-mt-2">
+                                            <div class="form-control upload-form-control p-0 mb-2" *ngFor="let audio of audioArray">
+                                                <div class="d-lg-flex align-items-center input-icon-box upload-icon-box">
+                                                    <div class="choose-file-left">
+                                                        <svg class="input-icon fill-m-color" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H5V6h14v12zM7 15h3c.55 0 1-.45 1-1v-1H9.5v.5h-2v-3h2v.5H11v-1c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm7 0h3c.55 0 1-.45 1-1v-1h-1.5v.5h-2v-3h2v.5H18v-1c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1z"/></svg>
+                                                        <span class="choose-click dark-text desc-ellipsize-l1">{{audio.audio_file_name}}</span>
+                                                    </div>
+                                                    <a placement="bottom" ngbTooltip="Delete" class="res-as-delte">
+                                                        <i-feather class="feather-icon icon-cancel icon-wid-lg cursor" name="trash" (click)="deleteAudio(audio.audio_id, audio.audio_lang)"></i-feather>
+                                                    </a>
+                                                    <div class="choose-file-right">
+                                                        <div class="filter-flex">
+                                                            <div class="filter-select cursor-default pr-3">
+                                                                <svg class="mr-3 icon-color" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                                                                <span>{{audio.audio_lang}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-ls">Upload Subtitle</label>
+                            <div class="upload-bgbox">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="upload-card-left">
+                                            <label class="fs-ls">Select Language</label>
+                                            <div class="input-icon-box">
+                                                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                                                <select class="form-control" (change)="setSubtitleLang($event)">
+                                                    <option *ngIf="subtitleLangArray.indexOf('English') === -1">English</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Tamil') === -1">Tamil</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Hindi') === -1">Hindi</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Malayalam') === -1">Malayalam</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Kannadam') === -1">Kannadam</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Korean') === -1">Korean</option>
+                                                    <option *ngIf="subtitleLangArray.indexOf('Chinese') === -1">Chinese</option>
+                                                </select>
+                                                <i-feather class="feather-icon input-icon select-arrow icon-wid-lg" name="chevron-down"></i-feather>
+                                            </div>
+                                            <div class="pos-rel pt-4">
+                                                <div class="image-up" *ngIf="!subtitleUploading">
+                                                    <i-feather class="feather-icon icon-m-color" name="plus-circle"></i-feather>
+                                                    <input type="file" class="file-input" (change)="onSubtitlePicked($event)">
+                                                    <h5 class="mt-4">Upload Subtitle Here</h5>
+                                                </div>
+                                                <div class="file-circle-progress" *ngIf="subtitleUploading">
+                                                    <circle-progress [percent]="subtitleUploadProgress" [space]="-2" [showTitle]="true" [showSubtitle]="false" [radius]="60" [outerStrokeWidth]="3" [innerStrokeWidth]="2" [outerStrokeColor]="'#304edb'" [innerStrokeColor]="'#dddddd'" [animation]="true" [animationDuration]="1000"></circle-progress>
+                                                    <h5 class="mt-4">Uploading...</h5>
+                                                </div>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12                                                                                                                                            ">
+                                        <div class="common-scroll upload-info-value res-mt-2">
+                                            <div class="form-control upload-form-control p-0 mb-2" *ngFor="let subtitle of subtitleArray">
+                                                <div class="d-lg-flex align-items-center input-icon-box upload-icon-box">
+                                                    <div class="choose-file-left">
+                                                        <svg class="input-icon fill-m-color" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H5V6h14v12zM7 15h3c.55 0 1-.45 1-1v-1H9.5v.5h-2v-3h2v.5H11v-1c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm7 0h3c.55 0 1-.45 1-1v-1h-1.5v.5h-2v-3h2v.5H18v-1c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1z"/></svg>
+                                                        <span class="choose-click dark-text desc-ellipsize-l1">{{subtitle.subtitle_file_name}}</span>
+                                                    </div>
+                                                    <a placement="bottom" ngbTooltip="Delete" class="res-as-delte">
+                                                        <i-feather class="feather-icon icon-cancel icon-wid-lg cursor" name="trash" (click)="deleteSubtitle(subtitle.subtitle_id, subtitle.subtitle_lang)"></i-feather>
+                                                    </a>
+                                                    <div class="choose-file-right">
+                                                        <div class="filter-flex">
+                                                            <div class="filter-select cursor-default pr-3">
+                                                                <svg class="mr-3 icon-color" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+                                                                <span>{{subtitle.subtitle_lang}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group">
+                            <div class="common-checkobx">
+                                <input type="checkbox" id="schedule-date">
+                                <label for="schedule-date" class="checkbox-label cursor fs-ls">Schedule your movie release date</label>
+                                <div class="schedule-group">
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <label class="fs-ls">Schedule Date</label>
+                                                <div class="input-icon-box common-calendar">
+                                                    <i-feather class="feather-icon input-icon right-align icon-wid-lg cursor" name="calendar" (click)="date.toggle()"></i-feather>
+                                                    <input type="text" class="form-control pl-3 cursor" placeholder="yyyy-mm-dd" ngbDatepicker #date="ngbDatepicker" (click)="date.toggle()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <label class="fs-ls">Schedule Time</label>
+                                                <div class="input-icon-box">
+                                                    <i-feather name="clock" class="feather-icon input-icon right-align icon-wid-lg"></i-feather>
+                                                    <input type="text" placeholder="HH:MM" class="form-control pl-3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="reg-submit-btn">
+                            <button type="submit" class="common-button" (click)="uploadInformationBack()"><i-feather class="feather-icon icon-wid-lg mr-2" name="chevron-left"></i-feather> <span class="mr-3">Back</span></button>
+                            <button type="submit" class="common-button" (click)="submitForm()" [disabled]="formLoading">
+                                <svg *ngIf="formLoading" [ngClass]="{'loader-icon mr-2': formLoading}" aria-hidden="true" width="20" height="20" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"></path></svg> 
+                                Submit
+                            </button>
+                        </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-6 col-12">
+                <div class="add-information-sidebar">
+                    <ul class="pl-0">
+                        <li class="add-detail-list-col" [ngClass]="{'active': basicInformation === true}">
+                            <span class="add-detail-icon"><i-feather class="feather-icon icon-wid-lg" name="check-circle"></i-feather></span>
+                            <div class="add-detail-list-info">
+                                <h5>Episode Basic Information</h5>
+                                <p class="fs-ls">Fill your Episode Number, Episode Name, Release Date, Description, Certificate and Posters</p>
+                            </div>
+                        </li>
+                        <li class="add-detail-list-col" [ngClass]="{'active': uploadInformation === true}">
+                            <span class="add-detail-icon"><i-feather class="feather-icon icon-wid-lg" name="check-circle"></i-feather></span>
+                            <div class="add-detail-list-info">
+                                <h5>Episode Uploads</h5>
+                                <p class="fs-ls">Upload your Episode, Audio, Subtitle and set a prime time for it</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="text-center">
+                        <img src="assets/images/add-sidebar-image.png" alt="Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
